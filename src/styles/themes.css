@@ -1,0 +1,35 @@
+/* Light Theme */
+[data-theme="light"] {
+  --bg: #ffffff;
+  --surface: #faf6f2;
+  --surface-2: #f5efe9;
+
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+
+  --border: #e8ddd4;
+
+  --primary: #ff6b00;
+  --primary-hover: #e55f00;
+
+  --success: #16a34a;
+  --danger: #dc2626;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  --bg: #0f1117;
+  --surface: #171923;
+  --surface-2: #1f2330;
+
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+
+  --border: #2a2f3c;
+
+  --primary: #ff6b00;
+  --primary-hover: #ff7f22;
+
+  --success: #22c55e;
+  --danger: #ef4444;
+}
