@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useAuth } from "../../hooks/auth/useAuth";
 import { useNavigate } from "react-router-dom";
+import { FaSpinner } from "react-icons/fa";
 
-function LoginForm({onForgotPassword }) {
+function LoginForm({ onForgotPassword }) {
   const { login, loading } = useAuth();
   const navigate = useNavigate();
 
@@ -76,7 +77,7 @@ function LoginForm({onForgotPassword }) {
           />
         </div>
 
-         {error && <p>{error}</p>}
+        {error && <p>{error}</p>}
 
         <div className="auth-row">
           <label className="auth-check">
@@ -87,7 +88,14 @@ function LoginForm({onForgotPassword }) {
         </div>
 
         <button type="submit" className="auth-submit" disabled={loading}>
-          {loading ? "Signing In..." : "Sign In"}
+          {loading ? (
+            <>
+              <FaSpinner className="btn-spinner" />
+              Signing In...
+            </>
+          ) : (
+            "Sign In"
+          )}
         </button>
       </form>
     </>
