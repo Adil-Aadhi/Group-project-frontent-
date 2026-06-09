@@ -928,3 +928,143 @@ textarea {
     animation-iteration-count: 1 !important;
   }
 }
+
+.website-input-wrapper {
+  position: relative;
+}
+
+.website-input-wrapper input {
+  width: 100%;
+}
+
+.url-indicator {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+}
+
+.url-indicator.success {
+  color: #22c55e;
+}
+
+.url-indicator.error {
+  color: #ef4444;
+}
+.url-indicator.loading {
+  animation: spin 1s linear infinite;
+  color: #64748b;
+}
+
+@keyframes spin {
+  from {
+    transform: translateY(-50%) rotate(0deg);
+  }
+
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+/* ─── Field-level error (email, etc.) ─────────────────────────────────────── */
+
+.field-error {
+  color: var(--danger);
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: -2px;
+}
+
+/* ─── Password strength panel ──────────────────────────────────────────────── */
+
+/* CSS-level colour tokens for each strength tier */
+:root {
+  --pw-weak:   #ef4444;
+  --pw-fair:   #f97316;
+  --pw-good:   #eab308;
+  --pw-strong: #22c55e;
+}
+
+.pw-panel {
+  display: grid;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+/* 4 horizontal bars */
+.pw-bars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+
+.pw-bar {
+  display: block;
+  height: 4px;
+  border-radius: 999px;
+  background-color: var(--border);
+  /* Framer Motion overrides background-color via inline style;
+     this is the fallback / starting value */
+  transition: background-color 0.3s ease;
+}
+
+/* Strength label (Weak / Fair / Good / Strong) */
+.pw-label {
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  /* color is set inline by Framer Motion */
+}
+
+/* Checklist */
+.pw-checklist {
+  display: grid;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pw-check-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.pw-check-icon {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  /* color animated by Framer Motion */
+  transition: color 0.25s ease;
+}
+
+.pw-check-label {
+  font-size: 12px;
+  font-weight: 700;
+  /* color animated by Framer Motion */
+  transition: color 0.25s ease;
+}
+
+/* ─── Confirm password inline status ───────────────────────────────────────── */
+
+.pw-cfm-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: -2px;
+}
+
+.pw-cfm-status.is-match {
+  color: var(--success);
+}
+
+.pw-cfm-status.is-mismatch {
+  color: var(--danger);
+}

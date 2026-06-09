@@ -28,7 +28,7 @@ const formVariants = {
 };
 
 function AuthExperience() {
-  const [view, setView] = useState("register");
+  const [view, setView] = useState("login");
   const isVerifyOtp =
       view === "verifyOtp" ||
       view === "forgotPasswordOtp";
