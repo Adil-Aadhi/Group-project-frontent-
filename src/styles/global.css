@@ -14,6 +14,7 @@ body {
     background-color 0.3s ease,
     color 0.3s ease;
 }
+
 #root {
   min-height: 100vh;
   background: var(--bg);
@@ -39,6 +40,7 @@ textarea {
 }
 
 @keyframes authFloat {
+
   0%,
   100% {
     transform: translateY(0);
@@ -61,11 +63,9 @@ textarea {
   min-height: 100vh;
   overflow: hidden;
   background:
-    radial-gradient(
-      circle at 78% 38%,
+    radial-gradient(circle at 78% 38%,
       color-mix(in srgb, var(--primary) 8%, transparent),
-      transparent 32%
-    ),
+      transparent 32%),
     var(--bg);
   color: var(--text-primary);
 }
@@ -220,7 +220,7 @@ textarea {
   font-weight: 800;
 }
 
-.auth-preview__header > span {
+.auth-preview__header>span {
   border-radius: 999px;
   background: var(--primary);
   padding: 6px 10px;
@@ -340,11 +340,15 @@ textarea {
   max-height: calc(100vh - 80px);
   overflow-y: auto;
 
-  scrollbar-width: none;      /* Firefox */
-  -ms-overflow-style: none;   /* IE/Edge */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge */
 }
+
 .auth-card--wide::-webkit-scrollbar {
-  display: none;              /* Chrome/Safari */
+  display: none;
+  /* Chrome/Safari */
 }
 
 .auth-card--center {
@@ -531,6 +535,13 @@ textarea {
   color: var(--primary);
   font-weight: 800;
   text-decoration: none;
+}
+
+.auth-switch button:disabled {
+  color: #9ca3af !important;
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .auth-switch a:hover,
@@ -773,6 +784,7 @@ textarea {
 }
 
 @media (min-width: 1024px) {
+
   .auth-page,
   .auth-shell,
   .auth-showcase,
@@ -927,6 +939,7 @@ textarea {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -960,6 +973,7 @@ textarea {
 .url-indicator.error {
   color: #ef4444;
 }
+
 .url-indicator.loading {
   animation: spin 1s linear infinite;
   color: #64748b;
@@ -988,9 +1002,9 @@ textarea {
 
 /* CSS-level colour tokens for each strength tier */
 :root {
-  --pw-weak:   #ef4444;
-  --pw-fair:   #f97316;
-  --pw-good:   #eab308;
+  --pw-weak: #ef4444;
+  --pw-fair: #f97316;
+  --pw-good: #eab308;
   --pw-strong: #22c55e;
 }
 
@@ -1064,6 +1078,7 @@ textarea {
 .pw-check-icon {
   font-size: 18px;
 }
+
 .pw-check-item.is-met .pw-check-icon {
   color: #22c55e;
 }
@@ -1091,10 +1106,12 @@ textarea {
 .email-status.error {
   color: #ef4444;
 }
+
 .auth-submit:disabled {
   cursor: not-allowed;
 
 }
+
 .submit-error {
   margin-bottom: 12px;
 
@@ -1107,6 +1124,7 @@ textarea {
 
   letter-spacing: 0.2px;
 }
+
 .auth-submit {
   display: flex;
   align-items: center;
@@ -1231,7 +1249,7 @@ textarea {
   background: var(--surface);
   box-shadow:
     0 8px 24px color-mix(in srgb, var(--border) 80%, transparent),
-    0 2px 6px  color-mix(in srgb, var(--border) 50%, transparent);
+    0 2px 6px color-mix(in srgb, var(--border) 50%, transparent);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   transform-origin: top center;
@@ -1315,6 +1333,7 @@ textarea {
 
 /* ── Reduced motion ─────────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
+
   .industry-trigger,
   .industry-trigger__chevron,
   .industry-option {
@@ -1328,8 +1347,13 @@ textarea {
    Rotates a conic-gradient so an orange arc continuously travels around the
    box perimeter. The gradient is clipped to a thin ring via a mask.           */
 @keyframes otpSweep {
-  from { --otp-angle: 0deg; }
-  to   { --otp-angle: 360deg; }
+  from {
+    --otp-angle: 0deg;
+  }
+
+  to {
+    --otp-angle: 360deg;
+  }
 }
 
 @property --otp-angle {
@@ -1344,7 +1368,8 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 16px; /* matches auth-otp input border-radius */
+  border-radius: 16px;
+  /* matches auth-otp input border-radius */
 }
 
 /* The native OTP input inside the wrapper */
@@ -1359,19 +1384,19 @@ textarea {
 .otp-sweep {
   pointer-events: none;
   position: absolute;
-  inset: -2px; /* 2px outside the input to form the border ring */
-  border-radius: 18px; /* input radius + inset */
+  inset: -2px;
+  /* 2px outside the input to form the border ring */
+  border-radius: 18px;
+  /* input radius + inset */
   z-index: 2;
 
   /* Rotating conic gradient — orange arc on transparent background */
-  background: conic-gradient(
-    from var(--otp-angle),
-    transparent 0deg,
-    transparent 60deg,
-    var(--primary) 120deg,
-    transparent 180deg,
-    transparent 360deg
-  );
+  background: conic-gradient(from var(--otp-angle),
+      transparent 0deg,
+      transparent 60deg,
+      var(--primary) 120deg,
+      transparent 180deg,
+      transparent 360deg);
 
   animation: otpSweep 1.4s linear infinite;
 
@@ -1384,14 +1409,28 @@ textarea {
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  padding: 2px; /* ring thickness */
+  padding: 2px;
+  /* ring thickness */
 }
 
 /* ── Flash state — primary colour highlight ─────────────────────────────────── */
 @keyframes otpFlash {
-  0%   { background: var(--bg); border-color: var(--primary); box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 22%, transparent); }
-  50%  { background: color-mix(in srgb, var(--primary) 14%, var(--bg)); border-color: var(--primary); box-shadow: 0 0 0 6px color-mix(in srgb, var(--primary) 14%, transparent); }
-  100% { background: var(--bg); border-color: var(--primary); }
+  0% {
+    background: var(--bg);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 22%, transparent);
+  }
+
+  50% {
+    background: color-mix(in srgb, var(--primary) 14%, var(--bg));
+    border-color: var(--primary);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--primary) 14%, transparent);
+  }
+
+  100% {
+    background: var(--bg);
+    border-color: var(--primary);
+  }
 }
 
 .otp-box-wrap.is-flash input {
@@ -1411,7 +1450,8 @@ textarea {
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  min-height: 68px; /* matches approximate height of the otp grid */
+  min-height: 68px;
+  /* matches approximate height of the otp grid */
   padding: 8px 0;
 }
 
