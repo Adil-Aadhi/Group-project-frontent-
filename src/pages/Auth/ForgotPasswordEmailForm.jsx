@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../hooks/auth/useAuth";
+import { FaSpinner } from "react-icons/fa";
 
 function ForgotPasswordEmailForm({ onVerifyOtp }) {
   const { forgotPassword, loading } = useAuth();
@@ -45,7 +46,14 @@ function ForgotPasswordEmailForm({ onVerifyOtp }) {
           className="auth-submit"
           disabled={loading}
         >
-          {loading ? "Sending..." : "Send OTP"}
+          {loading ? (
+            <>
+              <FaSpinner className="btn-spinner" />
+              Sending...
+            </>
+          ) : (
+            "Send OTP"
+          )}
         </button>
       </form>
     </>

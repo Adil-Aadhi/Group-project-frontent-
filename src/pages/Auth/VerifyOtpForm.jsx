@@ -11,6 +11,7 @@ function VerifyOtpForm({ onBack, email, verifyOtp, resendOtp, onSuccess }) {
   const [status, setStatus] = useState("idle"); // idle | error | resent
   const [phase, setPhase] = useState("idle"); // idle | verifying | flash | collapse | checkmark | done
   const { loading } = useAuth();
+  const [timer, setTimer] = useState(30);
 
   const successTimers = useRef([]);
 
@@ -18,6 +19,16 @@ function VerifyOtpForm({ onBack, email, verifyOtp, resendOtp, onSuccess }) {
   useEffect(() => {
     return () => successTimers.current.forEach(clearTimeout);
   }, []);
+
+  useEffect(() => {
+    if (timer <= 0) return;
+
+    const interval = setInterval(() => {
+      setTimer((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [timer]);
 
   const code = useMemo(() => digits.join(""), [digits]);
 
@@ -100,12 +111,16 @@ function VerifyOtpForm({ onBack, email, verifyOtp, resendOtp, onSuccess }) {
 
   // ── Resend — original logic untouched ─────────────────────────────────────
   const resendCode = async () => {
+    if (timer > 0) return;
+
     try {
       await resendOtp({ email });
 
       setDigits(Array(6).fill(""));
       setStatus("resent");
       setPhase("idle");
+
+      setTimer(30);
 
       document.getElementById("otp-0")?.focus();
     } catch (error) {
@@ -333,8 +348,12 @@ function VerifyOtpForm({ onBack, email, verifyOtp, resendOtp, onSuccess }) {
           >
             <p className="auth-switch">
               Did not receive a code?{" "}
-              <button type="button" onClick={resendCode}>
-                Resend OTP
+              <button
+                type="button"
+                onClick={resendCode}
+                disabled={timer > 0}
+              >
+                {timer > 0 ? `Resend in ${timer}s` : "Resend OTP"}
               </button>
             </p>
 

@@ -1,4 +1,7 @@
 import axios from "axios";
+import { useAuthStore } from "../../store/authStore";
+import { refreshAccessToken } from "../auth/authService";
+
 
 const api = axios.create({
   baseURL: "http://localhost:8000/api/v1",
@@ -10,10 +13,14 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("access_token");
+    const { accessToken, slug } = useAuthStore.getState();
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+
+    if (slug) {
+      config.headers["X-Tenant-Slug"] = slug;
     }
 
     return config;
@@ -24,8 +31,23 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response?.status === 401) {
-      // refresh logic here
+    const originalRequest = error.config;
+
+    if (error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url.includes("/auth/refresh")
+    ) {
+      originalRequest._retry = true;
+      try {
+        const response = await refreshAccessToken();
+        const newToken = response.access_token;
+        useAuthStore.getState().setAuth(newToken);
+        originalRequest.headers.Authorization = `Bearer ${newToken}`;
+        return api(originalRequest);
+      } catch (refreshError) {
+        useAuthStore.getState().logout();
+        return Promise.reject(refreshError);
+      }
     }
 
     return Promise.reject(error);
