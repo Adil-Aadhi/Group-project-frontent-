@@ -138,6 +138,7 @@ function RegisterForm({ onVerifyOtp }) {
       // Move to OTP page/modal
       onVerifyOtp({
         email: formData.email,
+        companyName: formData.company_name
       });
     } catch (error) {
       setSubmitError(
