@@ -1,17 +1,24 @@
 .dashboard-layout {
   display: flex;
-  flex-direction: column;
   min-height: 100vh;
-  background-color: var(--surface-2); /* slightly gray background for contrast with white cards */
+  background-color: var(--surface-2); 
 }
 
 .dashboard-main {
   flex: 1;
-  padding: 24px;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .dashboard-content-container {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 24px;
+}
+
+@media (max-width: 768px) {
+  .dashboard-layout {
+    padding-top: 56px; /* Make room for mobile top bar */
+  }
 }

@@ -1,0 +1,324 @@
+/* ==========================================================================
+   MASTER SIDEBAR LAYOUT (DESKTOP DEFAULT)
+   ========================================================================== */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 72px; /* Micro icon-only state */
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  left: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 24px 10px;
+  box-sizing: border-box;
+  z-index: 100;
+  overflow-y: auto;
+  flex-shrink: 0;
+  
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
+              padding 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.3s ease;
+}
+
+/* Hover Behavior (Only active on Desktop viewports) */
+@media (min-width: 769px) {
+  .sidebar:hover {
+    width: 260px;
+    padding: 24px 16px;
+  }
+}
+
+/* Hide Mobile Elements on Desktop */
+.mobile-top-bar, .sidebar-overlay, .mobile-close-internal {
+  display: none;
+}
+
+/* ==========================================================================
+   VISIBILITY EMISSION CONTROLS (Hides Text until Hovered/Expanded)
+   ========================================================================== */
+.sidebar-logo__text,
+.sidebar-section p,
+.sidebar-item__title,
+.sidebar-item__badge,
+.sidebar-profile-info {
+  opacity: 0;
+  visibility: hidden;
+  white-space: nowrap;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.sidebar .sidebar-insight {
+  opacity: 0;
+  visibility: hidden;
+  max-height: 0;
+  padding: 0;
+  border-color: transparent;
+  overflow: hidden;
+  transition: opacity 0.2s ease, max-height 0.35s ease, padding 0.2s ease;
+}
+
+/* Reveal rules on Desktop Hover */
+@media (min-width: 769px) {
+  .sidebar:hover .sidebar-logo__text,
+  .sidebar:hover .sidebar-section p,
+  .sidebar:hover .sidebar-item__title,
+  .sidebar:hover .sidebar-item__badge,
+  .sidebar:hover .sidebar-profile-info {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0.1s;
+  }
+
+  .sidebar:hover .sidebar-insight {
+    opacity: 1;
+    visibility: visible;
+    max-height: 160px;
+    padding: 12px;
+    border-color: var(--border);
+  }
+}
+
+/* ==========================================================================
+   ELEMENT STYLING SUBCLASSES
+   ========================================================================== */
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 12px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.sidebar-logo__mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sidebar-logo__mark span {
+  width: 9px;
+  height: 9px;
+  border: 2px solid var(--bg);
+  border-radius: 2px;
+  transform: rotate(45deg);
+}
+
+.sidebar-logo__text h2 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+  margin: 0;
+}
+
+.sidebar-logo__text h2 span { color: var(--primary); }
+.sidebar-logo__text p { font-size: 11px; font-weight: 600; color: var(--text-secondary); margin: 1px 0 0; }
+
+.sidebar-nav { display: flex; flex-direction: column; flex: 1; }
+
+.sidebar-section {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 14px 14px 6px;
+  min-height: 31px;
+  box-sizing: border-box;
+}
+.sidebar-section p { margin: 0; }
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 40px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  padding: 0 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 13.5px;
+  font-weight: 700;
+  text-align: left;
+  position: relative;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-item:hover { background: var(--surface-2); color: var(--text-primary); }
+.sidebar-item.is-active {
+  background: var(--bg);
+  color: var(--primary);
+  font-weight: 800;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--border) 45%, transparent);
+}
+
+.sidebar-item__icon { display: flex; align-items: center; justify-content: center; color: inherit; flex-shrink: 0; }
+.sidebar-item__title { flex: 1; }
+.sidebar-item__badge {
+  font-size: 10px;
+  font-weight: 800;
+  background: color-mix(in srgb, var(--primary) 12%, var(--surface-2));
+  color: var(--primary);
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px solid color-mix(in srgb, var(--primary) 20%, transparent);
+  line-height: 1;
+}
+.sidebar-item__indicator { position: absolute; right: 14px; width: 4px; height: 4px; border-radius: 50%; background: var(--primary); }
+
+.sidebar-bottom { display: flex; flex-direction: column; gap: 12px; border-top: 1px solid var(--border); padding-top: 16px; margin-top: auto; }
+
+.sidebar-insight {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.sidebar-insight h4 { font-size: 12px; font-weight: 800; color: var(--text-primary); margin: 0; }
+.sidebar-insight p { font-size: 11px; color: var(--text-secondary); line-height: 1.45; margin: 0; white-space: normal; }
+
+.sidebar-profile { display: flex; align-items: center; gap: 10px; padding: 2px 6px; }
+.sidebar-profile-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--primary);
+  color: var(--bg);
+  font-weight: 800;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.sidebar-profile-info h4 { font-size: 13px; font-weight: 800; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; }
+.sidebar-profile-info p { font-size: 11px; color: var(--text-secondary); font-weight: 600; margin: 0; }
+
+.sidebar-profile-logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  margin-left: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+}
+
+@media (min-width: 769px) {
+  .sidebar:hover .sidebar-profile-logout { opacity: 1; visibility: visible; }
+}
+.sidebar-profile-logout:hover { background: color-mix(in srgb, var(--danger) 10%, var(--surface-2)); color: var(--danger); }
+
+
+/* ==========================================================================
+   PRODUCTION MOBILE RESPONSIVE MEDIA QUERIES (<768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* Hide standard fixed sidebar flow off-screen entirely */
+  .sidebar {
+    width: 260px !important; /* Forces layout dimensions to full text size on open */
+    transform: translateX(-100%); /* Slides completely out of sight to left side */
+    padding: 20px 16px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Slide sidebar entry state when active toggle class is applied */
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  /* Make hidden content fully visible natively on mobile drawer */
+  .sidebar-logo__text,
+  .sidebar-section p,
+  .sidebar-item__title,
+  .sidebar-item__badge,
+  .sidebar-profile-info,
+  .sidebar-profile-logout {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* Display layout content for mobile insights container box */
+  .sidebar .sidebar-insight {
+    opacity: 1 !important;
+    visibility: visible !important;
+    max-height: 160px !important;
+    padding: 12px !important;
+    border-color: var(--border) !important;
+  }
+
+  /* Top banner sticky header for phone configurations */
+  .mobile-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 56px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 16px;
+    box-sizing: border-box;
+    z-index: 90;
+  }
+
+  .mobile-toggle-btn {
+    background: transparent;
+    border: 0;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+  }
+
+  /* Internal close button inside mobile drawer header */
+  .mobile-close-internal {
+    display: flex;
+    background: transparent;
+    border: 0;
+    color: var(--text-secondary);
+    position: absolute;
+    right: 4px;
+    cursor: pointer;
+  }
+
+  /* Dark background mask layer overlay behind side active drawer overlay */
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 95;
+  }
+}

@@ -1,15 +1,14 @@
 import React from 'react';
-import Topbar from '../components/Topbar/Topbar';
+import Sidebar from '../components/sidebar/Sidebar';
+import { Outlet } from 'react-router-dom';
 import './DashboardLayout.css';
 
-const DashboardLayout = ({ children }) => {
+const DashboardLayout = () => {
   return (
     <div className="dashboard-layout">
-      <Topbar />
+      <Sidebar />
       <main className="dashboard-main">
-        <div className="dashboard-content-container">
-          {children}
-        </div>
+        <Outlet />
       </main>
     </div>
   );
