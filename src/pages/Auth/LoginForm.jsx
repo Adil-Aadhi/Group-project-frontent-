@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useAuth } from "../../hooks/auth/useAuth";
 import { useNavigate } from "react-router-dom";
+import { FaSpinner } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 
-function LoginForm({onForgotPassword }) {
+function LoginForm({ onForgotPassword }) {
   const { login, loading } = useAuth();
   const navigate = useNavigate();
 
@@ -31,9 +33,8 @@ function LoginForm({onForgotPassword }) {
       navigate("/dashboard");
     } catch (err) {
       setError(
-        err.response?.data?.message || "Login failed"
+        err.response?.data?.detail || "Login failed"
       );
-      console.log(err.response?.data);
     }
   };
   return (
@@ -76,18 +77,33 @@ function LoginForm({onForgotPassword }) {
           />
         </div>
 
-         {error && <p>{error}</p>}
+        <AnimatePresence>
+          {error && (
+            <motion.div
+              className="submit-error"
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              {error}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div className="auth-row">
-          <label className="auth-check">
-            <input type="checkbox" />
-            <span>Remember me</span>
-          </label>
           <button type="button" onClick={onForgotPassword}>Forgot password?</button>
         </div>
 
         <button type="submit" className="auth-submit" disabled={loading}>
-          {loading ? "Signing In..." : "Sign In"}
+          {loading ? (
+            <>
+              <FaSpinner className="btn-spinner" />
+              Signing In...
+            </>
+          ) : (
+            "Sign In"
+          )}
         </button>
       </form>
     </>

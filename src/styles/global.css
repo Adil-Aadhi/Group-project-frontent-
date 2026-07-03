@@ -14,6 +14,7 @@ body {
     background-color 0.3s ease,
     color 0.3s ease;
 }
+
 #root {
   min-height: 100vh;
   background: var(--bg);
@@ -39,6 +40,7 @@ textarea {
 }
 
 @keyframes authFloat {
+
   0%,
   100% {
     transform: translateY(0);
@@ -61,11 +63,9 @@ textarea {
   min-height: 100vh;
   overflow: hidden;
   background:
-    radial-gradient(
-      circle at 78% 38%,
+    radial-gradient(circle at 78% 38%,
       color-mix(in srgb, var(--primary) 8%, transparent),
-      transparent 32%
-    ),
+      transparent 32%),
     var(--bg);
   color: var(--text-primary);
 }
@@ -220,7 +220,7 @@ textarea {
   font-weight: 800;
 }
 
-.auth-preview__header > span {
+.auth-preview__header>span {
   border-radius: 999px;
   background: var(--primary);
   padding: 6px 10px;
@@ -337,6 +337,18 @@ textarea {
 
 .auth-card--wide {
   max-width: 640px;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge */
+}
+
+.auth-card--wide::-webkit-scrollbar {
+  display: none;
+  /* Chrome/Safari */
 }
 
 .auth-card--center {
@@ -523,6 +535,13 @@ textarea {
   color: var(--primary);
   font-weight: 800;
   text-decoration: none;
+}
+
+.auth-switch button:disabled {
+  color: #9ca3af !important;
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .auth-switch a:hover,
@@ -765,6 +784,7 @@ textarea {
 }
 
 @media (min-width: 1024px) {
+
   .auth-page,
   .auth-shell,
   .auth-showcase,
@@ -919,6 +939,7 @@ textarea {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -926,5 +947,594 @@ textarea {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+}
+
+.website-input-wrapper {
+  position: relative;
+}
+
+.website-input-wrapper input {
+  width: 100%;
+}
+
+.url-indicator {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+}
+
+.url-indicator.success {
+  color: #22c55e;
+}
+
+.url-indicator.error {
+  color: #ef4444;
+}
+
+.url-indicator.loading {
+  animation: spin 1s linear infinite;
+  color: #64748b;
+}
+
+@keyframes spin {
+  from {
+    transform: translateY(-50%) rotate(0deg);
+  }
+
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+/* ─── Field-level error (email, etc.) ─────────────────────────────────────── */
+
+.field-error {
+  color: var(--danger);
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: -2px;
+}
+
+/* ─── Password strength panel ──────────────────────────────────────────────── */
+
+/* CSS-level colour tokens for each strength tier */
+:root {
+  --pw-weak: #ef4444;
+  --pw-fair: #f97316;
+  --pw-good: #eab308;
+  --pw-strong: #22c55e;
+}
+
+.confirm-password-wrapper {
+  position: relative;
+}
+
+.confirm-status {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+}
+
+.confirm-status.success {
+  color: #22c55e;
+}
+
+.confirm-status.error {
+  color: #ef4444;
+}
+
+.pw-panel-full {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-top: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.pw-title {
+  text-align: center;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.pw-bars {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.pw-bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--border);
+}
+
+.pw-label {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.pw-checklist {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+}
+
+.pw-check-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pw-check-icon {
+  font-size: 18px;
+}
+
+.pw-check-item.is-met .pw-check-icon {
+  color: #22c55e;
+}
+
+.pw-check-item:not(.is-met) .pw-check-icon {
+  color: #ef4444;
+}
+
+.email-input-wrapper {
+  position: relative;
+}
+
+.email-status {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+}
+
+.email-status.success {
+  color: #22c55e;
+}
+
+.email-status.error {
+  color: #ef4444;
+}
+
+.auth-submit:disabled {
+  cursor: not-allowed;
+
+}
+
+.submit-error {
+  margin-bottom: 12px;
+
+  color: #ef4444;
+
+  text-align: center;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  letter-spacing: 0.2px;
+}
+
+.auth-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-spinner {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ─── Industry Custom Dropdown ─────────────────────────────────────────────── */
+
+/* Wrapper — positions the listbox */
+.auth-field:has(.industry-trigger) {
+  position: relative;
+}
+
+/* ── Trigger button ─────────────────────────────────────────────────────────── */
+.industry-trigger {
+  /* Reset button defaults */
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  cursor: pointer;
+
+  /* Match existing auth-field input sizing exactly */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  min-height: 54px;
+  padding: 0 14px 0 16px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-primary);
+  font-size: 15px;
+  font-family: inherit;
+  text-align: left;
+
+  /* Smooth state transitions */
+  transition:
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    background-color 0.22s ease;
+}
+
+.industry-trigger:hover {
+  border-color: var(--primary);
+}
+
+.industry-trigger:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+.industry-trigger.is-open {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+/* Placeholder text colour */
+.industry-trigger.is-placeholder .industry-trigger__label {
+  color: var(--text-secondary);
+}
+
+.industry-trigger__label {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--text-primary);
+}
+
+/* ── Chevron icon ───────────────────────────────────────────────────────────── */
+.industry-trigger__chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+  transition: color 0.22s ease;
+}
+
+.industry-trigger__chevron svg {
+  width: 16px;
+  height: 16px;
+}
+
+.industry-trigger:hover .industry-trigger__chevron,
+.industry-trigger.is-open .industry-trigger__chevron {
+  color: var(--primary);
+}
+
+/* ── Animated dropdown panel ────────────────────────────────────────────────── */
+.industry-listbox {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow:
+    0 8px 24px color-mix(in srgb, var(--border) 80%, transparent),
+    0 2px 6px color-mix(in srgb, var(--border) 50%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  transform-origin: top center;
+  overflow: hidden;
+}
+
+/* ── Option items ───────────────────────────────────────────────────────────── */
+.industry-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition:
+    background-color 0.16s ease,
+    color 0.16s ease;
+  outline: none;
+}
+
+.industry-option:hover {
+  background: color-mix(in srgb, var(--primary) 8%, var(--surface));
+  color: var(--text-primary);
+}
+
+.industry-option:focus-visible {
+  background: color-mix(in srgb, var(--primary) 8%, var(--surface));
+  color: var(--text-primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 35%, transparent);
+}
+
+/* Selected state */
+.industry-option.is-selected {
+  background: color-mix(in srgb, var(--primary) 10%, var(--surface));
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.industry-option.is-selected:hover {
+  background: color-mix(in srgb, var(--primary) 15%, var(--surface));
+}
+
+.industry-option__label {
+  flex: 1;
+}
+
+/* ── Check icon ─────────────────────────────────────────────────────────────── */
+.industry-option__check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.industry-option__check svg {
+  width: 11px;
+  height: 11px;
+}
+
+/* ── Mobile responsive ──────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .industry-trigger {
+    min-height: 50px;
+    border-radius: 14px;
+    font-size: 15px;
+  }
+
+  .industry-listbox {
+    border-radius: 14px;
+  }
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+
+  .industry-trigger,
+  .industry-trigger__chevron,
+  .industry-option {
+    transition: none !important;
+  }
+}
+
+/* ─── OTP Verification Animation ────────────────────────────────────────────── */
+
+/* ── Sweeping border keyframe ────────────────────────────────────────────────
+   Rotates a conic-gradient so an orange arc continuously travels around the
+   box perimeter. The gradient is clipped to a thin ring via a mask.           */
+@keyframes otpSweep {
+  from {
+    --otp-angle: 0deg;
+  }
+
+  to {
+    --otp-angle: 360deg;
+  }
+}
+
+@property --otp-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* ── Box wrapper (positions the sweep overlay) ──────────────────────────────── */
+.otp-box-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  /* matches auth-otp input border-radius */
+}
+
+/* The native OTP input inside the wrapper */
+.otp-box-wrap input {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Sweep overlay element ──────────────────────────────────────────────────── */
+.otp-sweep {
+  pointer-events: none;
+  position: absolute;
+  inset: -2px;
+  /* 2px outside the input to form the border ring */
+  border-radius: 18px;
+  /* input radius + inset */
+  z-index: 2;
+
+  /* Rotating conic gradient — orange arc on transparent background */
+  background: conic-gradient(from var(--otp-angle),
+      transparent 0deg,
+      transparent 60deg,
+      var(--primary) 120deg,
+      transparent 180deg,
+      transparent 360deg);
+
+  animation: otpSweep 1.4s linear infinite;
+
+  /* Mask to keep only a thin ring */
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 2px;
+  /* ring thickness */
+}
+
+/* ── Flash state — primary colour highlight ─────────────────────────────────── */
+@keyframes otpFlash {
+  0% {
+    background: var(--bg);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 22%, transparent);
+  }
+
+  50% {
+    background: color-mix(in srgb, var(--primary) 14%, var(--bg));
+    border-color: var(--primary);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--primary) 14%, transparent);
+  }
+
+  100% {
+    background: var(--bg);
+    border-color: var(--primary);
+  }
+}
+
+.otp-box-wrap.is-flash input {
+  animation: otpFlash 0.25s ease-out both;
+  border-color: var(--primary);
+}
+
+/* ── Error state — red border ────────────────────────────────────────────────── */
+.otp-box-wrap.is-error input {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 18%, transparent);
+}
+
+/* ── Success view container ──────────────────────────────────────────────────── */
+.otp-success-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  min-height: 68px;
+  /* matches approximate height of the otp grid */
+  padding: 8px 0;
+}
+
+/* ── Collapse boxes ──────────────────────────────────────────────────────────── */
+.otp-collapse-boxes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.otp-collapse-box {
+  width: 44px;
+  height: 58px;
+  border-radius: 16px;
+  border: 1px solid var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, var(--bg));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 14%, transparent);
+}
+
+/* ── Checkmark circle ────────────────────────────────────────────────────────── */
+.otp-checkmark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: var(--success);
+  color: #ffffff;
+  box-shadow:
+    0 0 0 8px color-mix(in srgb, var(--success) 16%, transparent),
+    0 18px 40px color-mix(in srgb, var(--success) 30%, transparent);
+}
+
+.otp-checkmark svg {
+  width: 36px;
+  height: 36px;
+}
+
+/* ── Success text ────────────────────────────────────────────────────────────── */
+.otp-success-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--success);
+  text-align: center;
+  letter-spacing: 0.1px;
+}
+
+/* ── Verifying state — dim inputs slightly ───────────────────────────────────── */
+.otp-box-wrap.is-verifying input {
+  opacity: 0.8;
+  cursor: not-allowed;
+  border-color: var(--primary);
+}
+
+/* ── Mobile tweaks ───────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .otp-collapse-box {
+    width: 36px;
+    height: 50px;
+    border-radius: 14px;
+  }
+
+  .otp-checkmark {
+    width: 58px;
+    height: 58px;
+  }
+
+  .otp-checkmark svg {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+/* ── Reduced motion — disable sweep & flash ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .otp-sweep {
+    animation: none !important;
+    opacity: 0.5;
+  }
+
+  .otp-box-wrap.is-flash input {
+    animation: none !important;
   }
 }

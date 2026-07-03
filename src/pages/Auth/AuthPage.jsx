@@ -28,10 +28,10 @@ const formVariants = {
 };
 
 function AuthExperience() {
-  const [view, setView] = useState("register");
+  const [view, setView] = useState("login");
   const isVerifyOtp =
-      view === "verifyOtp" ||
-      view === "forgotPasswordOtp";
+    view === "verifyOtp" ||
+    view === "forgotPasswordOtp";
   const [otpData, setOtpData] = useState(null);
   const navigate = useNavigate();
 
@@ -40,17 +40,16 @@ function AuthExperience() {
     setView("verifyOtp");
   };
   const {
-      verifyAccountOtp,
-      resendAccountOtp,
-      verifyForgotPasswordOtp,
-      resendForgotPasswordOtp,
-    } = useAuth()
+    verifyAccountOtp,
+    resendAccountOtp,
+    verifyForgotPasswordOtp,
+    resendForgotPasswordOtp,
+  } = useAuth()
 
   return (
     <div
-      className={`auth-card ${
-        view === "register" ? "auth-card--wide" : "auth-card--narrow"
-      } ${isVerifyOtp ? "auth-card--center" : ""}`}
+      className={`auth-card ${view === "register" ? "auth-card--wide" : "auth-card--narrow"
+        } ${isVerifyOtp ? "auth-card--center" : ""}`}
     >
       {!isVerifyOtp && (
         <nav className="auth-tabs" aria-label="Authentication">
@@ -89,40 +88,44 @@ function AuthExperience() {
             <RegisterForm onVerifyOtp={handleVerifyOtp} />
           )}
           {view === "login" && <LoginForm
-                onForgotPassword={() => setView("forgotPassword")}
-              />}
+            onForgotPassword={() => setView("forgotPassword")}
+          />}
           {view === "verifyOtp" && (
             <VerifyOtpForm
               email={otpData?.email}
               onBack={() => setView("register")}
               verifyOtp={verifyAccountOtp}
               resendOtp={resendAccountOtp}
-              onSuccess={() => navigate("/dashboard")}
+              onSuccess={() => {
+                setTimeout(() => {
+                  navigate("/dashboard");
+                }, 2000);
+              }}
             />
           )}
           {view === "forgotPassword" && (
-          <ForgotPasswordEmailForm
-            onVerifyOtp={(data) => {
-              setOtpData(data);
-              setView("forgotPasswordOtp");
-            }}
-          />
-        )}
-        {view === "forgotPasswordOtp" && (
-          <VerifyOtpForm
-            email={otpData?.email}
-            onBack={() => setView("forgotPassword")}
-            verifyOtp={verifyForgotPasswordOtp}
-            resendOtp={resendForgotPasswordOtp}
-            onSuccess={() => setView("resetPassword")}
-          />
-        )}
+            <ForgotPasswordEmailForm
+              onVerifyOtp={(data) => {
+                setOtpData(data);
+                setView("forgotPasswordOtp");
+              }}
+            />
+          )}
+          {view === "forgotPasswordOtp" && (
+            <VerifyOtpForm
+              email={otpData?.email}
+              onBack={() => setView("forgotPassword")}
+              verifyOtp={verifyForgotPasswordOtp}
+              resendOtp={resendForgotPasswordOtp}
+              onSuccess={() => setView("resetPassword")}
+            />
+          )}
 
-        {view === "resetPassword" && (
-          <ResetPasswordForm
-            email={otpData?.email}
-          />
-  )}
+          {view === "resetPassword" && (
+            <ResetPasswordForm
+              email={otpData?.email}
+            />
+          )}
         </motion.div>
       </AnimatePresence>
     </div>

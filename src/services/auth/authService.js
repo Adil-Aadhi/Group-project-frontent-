@@ -58,3 +58,11 @@ export const resetPassword = async (data) => {
 
   return response.data;
 };
+
+export const refreshAccessToken = async () => {
+  const response = await api.post("/auth/refresh", {
+    refresh_token: null,
+  });
+
+  return response.data;
+};

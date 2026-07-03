@@ -7,28 +7,38 @@ import {
   forgotPassword as forgotPasswordService,
   verifyForgotPasswordOtp,
   resetPassword,
-  resendForgotPasswordOtp
+  resendForgotPasswordOtp,
+  refreshAccessToken
 } from "../../services/auth/authService";
+import { useAuthStore } from "../../store/authStore";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { setAuth, isAuthenticated } = useAuthStore();
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token");
+    const restoreSession = async () => {
+      try {
+        setLoading(true);
+        const data = await refreshAccessToken();
 
-    if (token) {
-      setIsAuthenticated(true);
-    }
+        setAuth(data.access_token);
+        console.log("Restored:", useAuthStore.getState());
+      } catch (error) {
+        console.log("No active session");
+      } finally { setLoading(false); }
+
+    };
+
+    restoreSession();
   }, []);
 
-  const handleAuthSuccess = (data) => {
-    localStorage.setItem("access_token", data.access_token);
-    localStorage.setItem("schema_name", data.schema_name);
 
-    setIsAuthenticated(true);
+  const handleAuthSuccess = (data) => {
+    setAuth(data.access_token);
+    console.log(useAuthStore.getState());
   };
 
   const register = async (formData) => {
@@ -80,14 +90,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   const resendForgotPasswordOtpHandler = async (payload) => {
-  try {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    return await resendForgotPasswordOtp(payload);
-  } finally {
-    setLoading(false);
-  }
-};
+      return await resendForgotPasswordOtp(payload);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const forgotPassword = async (data) => {
     try {
@@ -141,7 +151,7 @@ export const AuthProvider = ({ children }) => {
         resetPassword:
           resetPasswordHandler,
         resendForgotPasswordOtp:
-          resendForgotPasswordOtpHandler, 
+          resendForgotPasswordOtpHandler,
         // logout,
         loading,
         isAuthenticated,
