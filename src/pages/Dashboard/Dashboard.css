@@ -1,0 +1,67 @@
+.dashboard-page-header {
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.dashboard-page-header h1 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 8px 0;
+}
+
+.dashboard-page-header p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.dashboard-page-header strong {
+  color: var(--text-primary);
+}
+
+.run-ai-scan-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #e85d04; /* Orange based on the design */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(232, 93, 4, 0.2);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.run-ai-scan-btn:hover {
+  background-color: #d05303;
+  transform: translateY(-1px);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.bottom-grid {
+  margin-bottom: 0;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .run-ai-scan-btn {
+    position: static;
+    margin-top: 16px;
+  }
+}
