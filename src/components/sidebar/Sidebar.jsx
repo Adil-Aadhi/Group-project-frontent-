@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { 
   LayoutDashboard, 
   Globe2, 
@@ -15,18 +16,26 @@ import SidebarInsight from "./SidebarInsight";
 import SidebarProfile from "./SidebarProfile";
 import "./Sidebar.css";
 
-const Sidebar = ({ currentPath = "Overview", onNavigate }) => {
+const Sidebar = ({ onNavigate }) => {
   // Mobile responsive view state tracking toggle
   const [isMobileExpanded, setIsMobileExpanded] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const toggleMobileSidebar = () => {
     setIsMobileExpanded(!isMobileExpanded);
   };
 
   const handleNavigation = (path) => {
-    onNavigate?.(path);
+    if (onNavigate) {
+      onNavigate(path);
+    } else {
+      navigate(path);
+    }
     setIsMobileExpanded(false); // Auto-closes slide out drawer on link select
   };
+
+  const currentPath = location.pathname;
 
   return (
     <>
@@ -59,30 +68,30 @@ const Sidebar = ({ currentPath = "Overview", onNavigate }) => {
           <SidebarItem
             title="Overview"
             icon={<LayoutDashboard size={16} />}
-            isActive={currentPath === "Overview"}
-            onClick={() => handleNavigation("Overview")}
+            isActive={currentPath === "/dashboard" || currentPath === "/dashboard/"}
+            onClick={() => handleNavigation("/dashboard")}
           />
 
           <SidebarItem
             title="Competitors"
             icon={<Globe2 size={16} />}
-            isActive={currentPath === "Competitors"}
-            onClick={() => handleNavigation("Competitors")}
+            isActive={currentPath === "/dashboard/competitors"}
+            onClick={() => handleNavigation("/dashboard/competitors")}
           />
 
           <SidebarItem
             title="Insights"
             icon={<Sparkles size={16} />}
             badge="AI"
-            isActive={currentPath === "Insights"}
-            onClick={() => handleNavigation("Insights")}
+            isActive={currentPath === "/dashboard/insights"}
+            onClick={() => handleNavigation("/dashboard/insights")}
           />
 
           <SidebarItem
             title="Reports"
             icon={<FileText size={16} />}
-            isActive={currentPath === "Reports"}
-            onClick={() => handleNavigation("Reports")}
+            isActive={currentPath === "/dashboard/reports"}
+            onClick={() => handleNavigation("/dashboard/reports")}
           />
 
           <SidebarSection title="Advanced Features" />
@@ -91,8 +100,8 @@ const Sidebar = ({ currentPath = "Overview", onNavigate }) => {
             title="CEO Briefing"
             icon={<Zap size={16} />}
             badge="AI"
-            isActive={currentPath === "CEO Briefing"}
-            onClick={() => handleNavigation("CEO Briefing")}
+            isActive={currentPath === "/dashboard/ceo-briefing"}
+            onClick={() => handleNavigation("/dashboard/ceo-briefing")}
           />
         </nav>
 
