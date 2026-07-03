@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import AuthPage from "./pages/Auth/AuthPage";
 import DashboardPage from "./pages/Dashboard/DashboardPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
-import DashboardPage from "./components/dashboardtest";
+// import DashboardPage from "./components/dashboardtest";
 
 function App() {
   return (
@@ -13,7 +13,6 @@ function App() {
 
         {/* Public route */}
         <Route path="/auth" element={<AuthPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
 
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>
