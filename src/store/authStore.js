@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode";
 export const useAuthStore = create((set) => ({
     accessToken: null,
     slug: null,
+    companyId: null,
     isAuthenticated: false,
 
     setAuth: (token) => {
@@ -13,6 +14,7 @@ export const useAuthStore = create((set) => ({
         set({
             accessToken: token,
             slug: decoded.slug,
+            companyId: decoded.sub,
             isAuthenticated: true,
         });
 
@@ -23,6 +25,7 @@ export const useAuthStore = create((set) => ({
         set({
             accessToken: null,
             slug: null,
+            companyId: null,
             isAuthenticated: false,
         }),
 }));

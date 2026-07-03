@@ -8,6 +8,8 @@ import ForgotPasswordEmailForm from "./ForgotPasswordEmailForm";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/auth/useAuth";
 import ResetPasswordForm from "./ResetPasswordForm";
+import { useProgressStore } from "../../store/progressStore";
+import { useAuthStore } from "../../store/authStore";
 
 const formVariants = {
   initial: {
@@ -34,6 +36,10 @@ function AuthExperience() {
     view === "forgotPasswordOtp";
   const [otpData, setOtpData] = useState(null);
   const navigate = useNavigate();
+
+  const { startJob } = useProgressStore();
+
+  const { slug } = useAuthStore();
 
   const handleVerifyOtp = (data) => {
     setOtpData(data);
@@ -96,7 +102,18 @@ function AuthExperience() {
               onBack={() => setView("register")}
               verifyOtp={verifyAccountOtp}
               resendOtp={resendAccountOtp}
+              // onSuccess={() => {
+              //   setTimeout(() => {
+              //     navigate("/dashboard");
+              //   }, 2000);
+              // }}
               onSuccess={() => {
+                startJob({
+                  companyId: `company_${slug}`,
+                  companyName: otpData?.companyName,
+                  type: "admin"
+                });
+
                 setTimeout(() => {
                   navigate("/dashboard");
                 }, 2000);

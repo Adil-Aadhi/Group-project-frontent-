@@ -1,0 +1,18 @@
+.progress-overlay {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 340px;
+    padding: 18px;
+    border-radius: 18px;
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    z-index: 9999;
+}
+
+.progress-overlay.minimized {
+    width: 90px;
+    height: 52px;
+}
