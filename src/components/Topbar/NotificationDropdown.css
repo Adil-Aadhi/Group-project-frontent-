@@ -1,12 +1,13 @@
 .notification-dropdown {
   position: absolute;
   top: 100%;
-  right: -80px; /* Adjust to align with the bell but not go off-screen */
+  right: -80px;
+  /* Adjust to align with the bell but not go off-screen */
   width: 380px;
   background-color: var(--bg);
   border: 1px solid var(--border);
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--border) 40%, transparent);
   margin-top: 12px;
   z-index: 100;
   overflow: hidden;
@@ -84,7 +85,7 @@
 }
 
 .preview-btn:hover {
-  background-color: #555;
+  background-color: var(--text-primary);
 }
 
 .notif-content p {
@@ -95,7 +96,7 @@
 
 .notif-time {
   font-size: 12px;
-  color: #888;
+  color: var(--text-secondary);
 }
 
 .notif-footer {
@@ -106,7 +107,7 @@
 .view-all-btn {
   background: transparent;
   border: none;
-  color: #0265ad; /* Link blue based on image */
+  color: var(--primary);
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;

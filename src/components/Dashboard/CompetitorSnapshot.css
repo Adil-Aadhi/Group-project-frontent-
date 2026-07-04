@@ -32,7 +32,7 @@
 .full-table-btn {
   background: transparent;
   border: none;
-  color: #0265ad; /* Match link color */
+  color: var(--primary);
   font-weight: 700;
   font-size: 13px;
   cursor: pointer;
@@ -48,7 +48,7 @@
   text-align: left;
   font-size: 11px;
   font-weight: 700;
-  color: #718096;
+  color: var(--text-secondary);
   text-transform: uppercase;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--border);

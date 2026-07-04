@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Search, Bell, Zap } from 'lucide-react';
 import NotificationDropdown from './NotificationDropdown';
 import './Topbar.css';
+import ThemeToggle from '../ui/ThemeToggle';
 
 const Topbar = () => {
   const [isNotifOpen, setIsNotifOpen] = useState(false);
@@ -15,12 +16,12 @@ const Topbar = () => {
           <h2>Dashboard</h2>
           <span className="live-badge">Live</span>
         </div>
-        
+
         <div className="search-section">
           <Search size={18} className="search-icon" />
-          <input 
-            type="text" 
-            placeholder="Search competitors, alerts, insights..." 
+          <input
+            type="text"
+            placeholder="Search competitors, alerts, insights..."
             className="search-input"
           />
           <span className="shortcut-hint">⌘K</span>
@@ -28,6 +29,9 @@ const Topbar = () => {
       </div>
 
       <div className="topbar-right">
+
+        <ThemeToggle />
+
         <button className="quick-scan-btn">
           <Zap size={16} /> Quick Scan
         </button>

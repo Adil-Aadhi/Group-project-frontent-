@@ -148,7 +148,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background-color: #e85d04;
+  background-color: var(--primary);
   color: white;
   display: flex;
   align-items: center;
