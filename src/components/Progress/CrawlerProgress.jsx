@@ -40,25 +40,29 @@ const CrawlerProgress = ({ job }) => {
 
     return (
         <div className={`progress-overlay ${minimized ? "minimized" : ""}`}>
-            <button onClick={() => setMinimized(!minimized)}>
-                {minimized ? "⬆" : "⬇"}
-            </button>
+            {/* Wrap everything in a content layer container */}
+            <div className="progress-content">
+                <button onClick={() => setMinimized(!minimized)} title={status}>
+                    {minimized ? "⬆" : "⬇"}
+                </button>
 
-            {!minimized && (
-                <>
-                    <h4>VoxIntel AI Setup</h4>
-                    <p>{status}</p>
+                {minimized && (
+                    <span className="mini-percent">{progress}%</span>
+                )}
 
-                    <div className="progress-bar">
-                        <div
-                            className="progress-fill"
-                            style={{ width: `${progress}%` }}
-                        />
-                    </div>
+                {!minimized && (
+                    <>
+                        <h4>VoxIntel AI Setup</h4>
+                        <p>{status}</p>
 
-                    <span>{progress}%</span>
-                </>
-            )}
+                        <div className="progress-bar">
+                            <div className="progress-fill" style={{ width: `${progress}%` }} />
+                        </div>
+
+                        <span>{progress}%</span>
+                    </>
+                )}
+            </div>
         </div>
     );
 };

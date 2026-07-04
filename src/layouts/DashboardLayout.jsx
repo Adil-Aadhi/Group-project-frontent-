@@ -19,6 +19,7 @@ const DashboardLayout = () => {
       {isVisible && activeJob && (
         <CrawlerProgress job={activeJob} />
       )}
+
     </div>
   );
 };
