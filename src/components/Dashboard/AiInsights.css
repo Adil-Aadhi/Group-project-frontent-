@@ -3,7 +3,7 @@
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--border) 30%, transparent);
   height: 100%;
 }
 

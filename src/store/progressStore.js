@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
 export const useProgressStore = create((set) => ({
-    activeJob: null,
-    isVisible: false,
+    activeJob: true,
+    isVisible: true,
 
     startJob: (job) =>
         set({

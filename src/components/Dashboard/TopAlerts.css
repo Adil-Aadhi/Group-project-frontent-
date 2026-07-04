@@ -30,7 +30,7 @@
 }
 
 .new-badge {
-  background-color: rgba(240, 90, 40, 0.1); /* light orange */
+  background-color: color-mix(in srgb, var(--primary) 12%, transparent);
   color: var(--primary);
   font-size: 12px;
   font-weight: 700;
@@ -104,7 +104,7 @@
 .alert-content p {
   margin: 0;
   font-size: 13px;
-  color: #4a5568;
+  color: var(--text-secondary);
   line-height: 1.4;
 }
 
@@ -116,7 +116,7 @@
 .view-all-alerts {
   background: transparent;
   border: none;
-  color: #0265ad; /* Match link color */
+  color: var(--primary);
   font-weight: 700;
   font-size: 13px;
   cursor: pointer;
