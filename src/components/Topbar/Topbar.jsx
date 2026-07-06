@@ -1,19 +1,31 @@
 import React, { useState } from 'react';
-import { Search, Bell, Zap } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
+import { Bell } from 'lucide-react';
 import NotificationDropdown from './NotificationDropdown';
 import './Topbar.css';
 import ThemeToggle from '../ui/ThemeToggle';
 
+const PAGE_TITLES = {
+  '/dashboard': 'Dashboard',
+  '/dashboard/competitors': 'Competitors',
+  '/dashboard/insights': 'Insights',
+  '/dashboard/reports': 'Reports',
+  '/dashboard/ceo-briefing': 'CEO Briefing',
+};
+
 const Topbar = () => {
   const [isNotifOpen, setIsNotifOpen] = useState(false);
+  const location = useLocation();
 
   const toggleNotif = () => setIsNotifOpen(!isNotifOpen);
+
+  const pageTitle = PAGE_TITLES[location.pathname] || 'Dashboard';
 
   return (
     <header className="topbar">
       <div className="topbar-left">
         <div className="logo-section">
-          <h2>Dashboard</h2>
+          <h2>{pageTitle}</h2>
           <span className="live-badge">Live</span>
         </div>
 
@@ -36,6 +48,9 @@ const Topbar = () => {
           <Zap size={16} /> Quick Scan
         </button>
 
+      </div>
+
+      <div className="topbar-right">
         <div className="notification-container">
           <button className="notif-btn" onClick={toggleNotif}>
             <Bell size={20} />

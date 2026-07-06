@@ -2,10 +2,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 24px;
+  padding: 16px 32px; /* was 12px 24px — now matches px-8 content padding */
   background-color: var(--bg);
   border-bottom: 1px solid var(--border);
-  height: 64px;
+  height: 72px; /* was 64px, gives a bit more breathing room like the reference */
+  box-sizing: border-box;
 }
 
 .topbar-left {
@@ -21,8 +22,9 @@
 }
 
 .logo-section h2 {
-  font-size: 20px;
+  font-size: 22px; /* was 20px */
   font-weight: 800;
+  letter-spacing: -0.3px;
   margin: 0;
   color: var(--text-primary);
 }
