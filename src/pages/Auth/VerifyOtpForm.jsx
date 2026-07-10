@@ -63,7 +63,7 @@ function VerifyOtpForm({ onBack, email, verifyOtp, resendOtp, onSuccess }) {
     setPhase("verifying");
 
     try {
-      await verifyOtp({ email, otp: code });
+      const response = await verifyOtp({ email, otp: code });
 
       // Step 2: flash
       setPhase("flash");
@@ -81,7 +81,7 @@ function VerifyOtpForm({ onBack, email, verifyOtp, resendOtp, onSuccess }) {
             setPhase("done");
 
             const t4 = setTimeout(() => {
-              onSuccess(); // original navigation — delayed until after full sequence
+              onSuccess(response);// original navigation — delayed until after full sequence
             }, 1000);
 
             successTimers.current.push(t4);
