@@ -1,23 +1,35 @@
 import React, { useState } from 'react';
-import { Search, Bell, Zap } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
+import { Bell, Search, Zap } from 'lucide-react';
 import NotificationDropdown from './NotificationDropdown';
 import './Topbar.css';
 import ThemeToggle from '../ui/ThemeToggle';
 
+const PAGE_TITLES = {
+  '/dashboard': 'Dashboard',
+  '/dashboard/competitors': 'Competitors',
+  '/dashboard/insights': 'Insights',
+  '/dashboard/reports': 'Reports',
+  '/dashboard/ceo-briefing': 'CEO Briefing',
+};
+
 const Topbar = () => {
   const [isNotifOpen, setIsNotifOpen] = useState(false);
+  const location = useLocation();
 
   const toggleNotif = () => setIsNotifOpen(!isNotifOpen);
+
+  const pageTitle = PAGE_TITLES[location.pathname] || 'Dashboard';
 
   return (
     <header className="topbar">
       <div className="topbar-left">
         <div className="logo-section">
-          <h2>Dashboard</h2>
+          <h2>{pageTitle}</h2>
           <span className="live-badge">Live</span>
         </div>
 
-        <div className="search-section">
+        {/* <div className="search-section">
           <Search size={18} className="search-icon" />
           <input
             type="text"
@@ -25,17 +37,19 @@ const Topbar = () => {
             className="search-input"
           />
           <span className="shortcut-hint">⌘K</span>
-        </div>
+        </div> */}
       </div>
 
-      <div className="topbar-right">
+     
 
-        <ThemeToggle />
-
-        <button className="quick-scan-btn">
+        {/* <button className="quick-scan-btn">
           <Zap size={16} /> Quick Scan
-        </button>
+        </button> */}
 
+      {/* </div> */}
+
+      <div className="topbar-right">
+         <ThemeToggle />
         <div className="notification-container">
           <button className="notif-btn" onClick={toggleNotif}>
             <Bell size={20} />
