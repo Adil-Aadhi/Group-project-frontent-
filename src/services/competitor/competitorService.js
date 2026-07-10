@@ -23,7 +23,7 @@ export const competitorService = {
       location: company.location || "",
       description: company.description || "",
     }));
-     console.log("Payload:", payload);
+    console.log("Payload:", payload);
 
     const response = await api.post(
       "/competitors/add",
@@ -52,15 +52,15 @@ export const competitorService = {
 
   startAnalysis: async (competitor) => {
 
-  console.log("Competitor:", competitor);
-  const response = await api.post(
-    "/competitors/analyze",
-    {
-      company_name: competitor.company_name,
-      slug: competitor.slug,
-    }
-  );
+    console.log("Competitor:", competitor);
+    const response = await api.post(
+      "/competitors/analyze",
+      {
+        company_name: competitor.company_name,
+        slug: competitor.slug,
+      }
+    );
 
-  return response.data;
-},
+    return response.data;
+  },
 };
