@@ -1,5 +1,6 @@
 import React from 'react';
 import Sidebar from '../components/sidebar/Sidebar';
+import Topbar from '../components/Topbar/Topbar';
 import { Outlet } from 'react-router-dom';
 import './DashboardLayout.css';
 import CrawlerProgress from '../components/Progress/CrawlerProgress';
@@ -14,7 +15,10 @@ const DashboardLayout = () => {
     <div className="dashboard-layout">
       <Sidebar />
       <main className="dashboard-main">
-        <Outlet />
+        <Topbar />
+        <div className="dashboard-scroll-area">
+          <Outlet />
+        </div>
       </main>
 
       {isVisible && activeJob && (

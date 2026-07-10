@@ -4,7 +4,7 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  width: 72px; /* Micro icon-only state */
+  width: 76px; /* Micro icon-only state */
   height: 100vh;
   position: sticky;
   top: 0;

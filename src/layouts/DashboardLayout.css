@@ -9,16 +9,22 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+  min-height: 100vh;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
-.dashboard-content-container {
-  width: 100%;
-  padding: 24px;
+.dashboard-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+   padding: 24px 32px 32px;
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
   .dashboard-layout {
-    padding-top: 56px;
-    /* Make room for mobile top bar */
+    padding-top: 56px; /* room for mobile top bar */
   }
 }
