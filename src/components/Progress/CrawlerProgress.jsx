@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useProgressStore } from "../../store/progressStore";
 import "./CrawlerProgress.css";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 const CrawlerProgress = ({ job }) => {
 
@@ -9,6 +10,9 @@ const CrawlerProgress = ({ job }) => {
     const [progress, setProgress] = useState(0);
     const [status, setStatus] = useState("");
     const [visible, setVisible] = useState(true);
+
+    const [isClosing, setIsClosing] = useState(false);
+
     const [minimized, setMinimized] = useState(false);
 
     const { finishJob } = useProgressStore();
@@ -25,10 +29,20 @@ const CrawlerProgress = ({ job }) => {
             setProgress(data.progress);
             setStatus(data.status);
 
+            // if (data.progress === 100) {
+            //     setTimeout(() => {
+            //         setVisible(false);
+            //         finishJob();
+            //     }, 3000);
+            // }
             if (data.progress === 100) {
                 setTimeout(() => {
-                    setVisible(false);
-                    finishJob();
+                    setIsClosing(true);
+
+                    setTimeout(() => {
+                        setVisible(false);
+                        finishJob();
+                    }, 450); // match CSS animation duration
                 }, 3000);
             }
             if (data.progress === -1) {
@@ -49,11 +63,19 @@ const CrawlerProgress = ({ job }) => {
     if (!visible) return null;
 
     return (
-        <div className={`progress-overlay ${minimized ? "minimized" : ""}`}>
+        <div className={`progress-overlay ${minimized ? "minimized" : ""} ${isClosing ? "closing" : ""}`}>
             {/* Wrap everything in a content layer container */}
             <div className="progress-content">
-                <button onClick={() => setMinimized(!minimized)} title={status}>
-                    {minimized ? "⬆" : "⬇"}
+                <button
+                    onClick={() => setMinimized(!minimized)}
+                    title={status}
+                    className="progress-toggle"
+                >
+                    {minimized ? (
+                        <ChevronUp size={16} strokeWidth={2.2} />
+                    ) : (
+                        <ChevronDown size={16} strokeWidth={2.2} />
+                    )}
                 </button>
 
                 {minimized && (
