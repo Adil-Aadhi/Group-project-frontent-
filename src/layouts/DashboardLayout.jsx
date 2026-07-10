@@ -8,6 +8,7 @@ import { useProgressStore } from '../store/progressStore';
 const DashboardLayout = () => {
 
   const { activeJob, isVisible } = useProgressStore();
+  console.log("DashboardLayout render:", { activeJob, isVisible });
 
   return (
     <div className="dashboard-layout">

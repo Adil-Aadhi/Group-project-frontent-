@@ -10,6 +10,7 @@ import { useAuth } from "../../hooks/auth/useAuth";
 import ResetPasswordForm from "./ResetPasswordForm";
 import { useProgressStore } from "../../store/progressStore";
 import { useAuthStore } from "../../store/authStore";
+import { jwtDecode } from "jwt-decode";
 
 const formVariants = {
   initial: {
@@ -102,14 +103,12 @@ function AuthExperience() {
               onBack={() => setView("register")}
               verifyOtp={verifyAccountOtp}
               resendOtp={resendAccountOtp}
-              // onSuccess={() => {
-              //   setTimeout(() => {
-              //     navigate("/dashboard");
-              //   }, 2000);
-              // }}
-              onSuccess={() => {
+              onSuccess={(response) => {
+
+                const decoded = jwtDecode(response.access_token)
+
                 startJob({
-                  companyId: `company_${slug}`,
+                  companyId: `company_${decoded.slug}`,
                   companyName: otpData?.companyName,
                   type: "admin"
                 });

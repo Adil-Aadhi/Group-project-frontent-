@@ -3,6 +3,9 @@ import { useProgressStore } from "../../store/progressStore";
 import "./CrawlerProgress.css";
 
 const CrawlerProgress = ({ job }) => {
+
+    console.log("CrawlerProgress rendered, job=", job);
+
     const [progress, setProgress] = useState(0);
     const [status, setStatus] = useState("");
     const [visible, setVisible] = useState(true);
@@ -11,13 +14,14 @@ const CrawlerProgress = ({ job }) => {
     const { finishJob } = useProgressStore();
 
     useEffect(() => {
+        let isActive = true;
         const ws = new WebSocket(
             `ws://127.0.0.1:8000/api/v1/ws/progress/${job.companyId}`
         );
 
         ws.onmessage = (event) => {
+            if (!isActive) return; // ignore messages if this effect instance was cleaned up
             const data = JSON.parse(event.data);
-
             setProgress(data.progress);
             setStatus(data.status);
 
@@ -27,14 +31,20 @@ const CrawlerProgress = ({ job }) => {
                     finishJob();
                 }, 3000);
             }
-
             if (data.progress === -1) {
                 setStatus("Something went wrong");
             }
         };
 
-        return () => ws.close();
-    }, [job, finishJob]);
+
+        return () => {
+            isActive = false;
+            // Only close if it's open or still connecting — avoids errors on already-closed sockets
+            if (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING) {
+                ws.close();
+            }
+        };
+    }, [job.companyId, finishJob]);
 
     if (!visible) return null;
 
