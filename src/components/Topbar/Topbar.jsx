@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Bell } from 'lucide-react';
+import { Bell, Search, Zap } from 'lucide-react';
 import NotificationDropdown from './NotificationDropdown';
 import './Topbar.css';
 import ThemeToggle from '../ui/ThemeToggle';
@@ -29,7 +29,7 @@ const Topbar = () => {
           <span className="live-badge">Live</span>
         </div>
 
-        <div className="search-section">
+        {/* <div className="search-section">
           <Search size={18} className="search-icon" />
           <input
             type="text"
@@ -37,20 +37,19 @@ const Topbar = () => {
             className="search-input"
           />
           <span className="shortcut-hint">⌘K</span>
-        </div>
+        </div> */}
       </div>
 
-      <div className="topbar-right">
+     
 
-        <ThemeToggle />
-
-        <button className="quick-scan-btn">
+        {/* <button className="quick-scan-btn">
           <Zap size={16} /> Quick Scan
-        </button>
+        </button> */}
 
-      </div>
+      {/* </div> */}
 
       <div className="topbar-right">
+         <ThemeToggle />
         <div className="notification-container">
           <button className="notif-btn" onClick={toggleNotif}>
             <Bell size={20} />

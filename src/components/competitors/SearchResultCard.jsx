@@ -10,20 +10,20 @@ const SearchResultCard = ({
       className={`search-result-card ${
         selected ? "selected" : ""
       }`}
-      onClick={() => onToggle(company.name)}
+      onClick={() => onToggle(company.company_name)}
     >
       {/* Company Details */}
       <div className="search-result-card__content">
         <h4 className="search-result-card__title">
-          {company.name}
+          {company.company_name}
         </h4>
 
         <p className="search-result-card__website">
-          {company.website}
+          {company.website_url}
         </p>
 
         <span className="search-result-card__category">
-          {company.category}
+          {company.industry}
         </span>
       </div>
 

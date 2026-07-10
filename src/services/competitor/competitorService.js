@@ -1,32 +1,66 @@
-import axios from "axios";
-
-// Assuming your base axios instance with token interceptors is ready in your api folder
-const API_URL = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api";
+import api from "../api/axios";
 
 export const competitorService = {
-  // Fetch only the tracked competitors for the logged-in user
   getTrackedCompetitors: async () => {
-    const response = await axios.get(`${API_URL}/competitors/`);
+    const response = await api.get("/competitors/");
     return response.data;
   },
 
-  // Trigger the background AI web agent to scan for 6 companies
   scanCompetitors: async (searchCriteria) => {
-    // searchCriteria = { industry: "...", district: "...", state: "..." }
-    const response = await axios.post(`${API_URL}/competitors/search/`, searchCriteria);
-    return response.data; // Expected: Array of 6 discovered companies
+    const response = await api.post(
+      "/competitors/discover",
+      searchCriteria
+    );
+
+    return response.data;
   },
 
-  // Save explicitly selected companies to the database
   trackSelectedCompetitors: async (selectedCompanies) => {
-    // selectedCompanies = Array of company objects chosen by user
-    const response = await axios.post(`${API_URL}/competitors/add/`, { companies: selectedCompanies });
+    const payload = selectedCompanies.map((company) => ({
+      company_name: company.company_name,
+      website_url: company.website_url,
+      industry: company.industry || "",
+      location: company.location || "",
+      description: company.description || "",
+    }));
+     console.log("Payload:", payload);
+
+    const response = await api.post(
+      "/competitors/add",
+      payload
+    );
+
     return response.data;
   },
 
-  // Delete a specific competitor via 3-dot menu
-  deleteCompetitor: async (competitorId) => {
-    const response = await axios.delete(`${API_URL}/competitors/${competitorId}/`);
+  addManualCompetitor: async (competitorData) => {
+    const response = await api.post(
+      "/competitors/",
+      competitorData
+    );
+
     return response.data;
-  }
+  },
+
+  deleteCompetitor: async (competitorId) => {
+    const response = await api.delete(
+      `/competitors/${competitorId}/`
+    );
+
+    return response.data;
+  },
+
+  startAnalysis: async (competitor) => {
+
+  console.log("Competitor:", competitor);
+  const response = await api.post(
+    "/competitors/analyze",
+    {
+      company_name: competitor.company_name,
+      slug: competitor.slug,
+    }
+  );
+
+  return response.data;
+},
 };

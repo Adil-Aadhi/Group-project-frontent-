@@ -1,9 +1,20 @@
 import React, { useState } from "react";
 import { X } from "lucide-react";
 
+const INDUSTRY_OPTIONS = [
+  "Healthcare / MedTech",
+  "E-commerce / Retail",
+  "SaaS / Software",
+  "Fintech",
+  "CRM / Marketing",
+  "Education",
+  "Other",
+];
+
 export default function AddCompetitorModal({ isOpen, onClose, onSave }) {
   const [name, setName] = useState("");
   const [website, setWebsite] = useState("");
+  const [industry, setIndustry] = useState(INDUSTRY_OPTIONS[0]);
   const [linkedin, setLinkedin] = useState("");
   const [instagram, setInstagram] = useState("");
   const [twitter, setTwitter] = useState("");
@@ -12,10 +23,11 @@ export default function AddCompetitorModal({ isOpen, onClose, onSave }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave({ name, website, linkedin, instagram, twitter });
+    onSave({ name, website, linkedin,industry, instagram, twitter });
     // Reset fields after save
     setName("");
     setWebsite("");
+    setIndustry(INDUSTRY_OPTIONS[0]);
     setLinkedin("");
     setInstagram("");
     setTwitter("");
@@ -63,6 +75,19 @@ export default function AddCompetitorModal({ isOpen, onClose, onSave }) {
               className="modal-field-input"
               required
             />
+          </div>
+
+           <div className="modal-field-group">
+            <label className="modal-field-label">Industry</label>
+            <select
+              value={industry}
+              onChange={(e) => setIndustry(e.target.value)}
+              className="modal-field-select"
+            >
+              {INDUSTRY_OPTIONS.map((option) => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
           </div>
 
           <div className="modal-field-group">

@@ -37,11 +37,12 @@ export default function QuickScanModal({ isOpen, onClose, onStartScan }) {
           onSubmit={(e) => { 
             e.preventDefault(); 
             // Fall back to default region values if inputs were submitted completely blank
-            onStartScan({ 
-              industry, 
-              district: district.trim() || "Kozhikode", 
-              stateName: stateName.trim() || "Kerala" 
-            }); 
+         onStartScan({
+            industry,
+            country: "India",
+            state: stateName.trim() || "Kerala",
+            district: district.trim() || "Kozhikode",
+          });
           }}
         >
           {/* Industry Selection Field */}
@@ -52,10 +53,16 @@ export default function QuickScanModal({ isOpen, onClose, onStartScan }) {
               onChange={(e) => setIndustry(e.target.value)} 
               className="modal-field-select"
             >
-              <option value="E-commerce / Retail">E-commerce / Retail</option>
-              <option value="SaaS / Software">SaaS / Software</option>
-              <option value="Healthcare / MedTech">Healthcare / MedTech</option>
-              <option value="Fintech">Fintech</option>
+              <option value="Software Development">Software Development</option>
+              <option value="Information Technology">Information Technology</option>
+              <option value="IT Services">IT Services</option>
+              <option value="Software Training Institutes">Software Training Institutes</option>
+              <option value="Digital Marketing">Digital Marketing</option>
+              <option value="FinTech">FinTech</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Education">Education</option>
+              <option value="E-commerce">E-commerce</option>
+
             </select>
           </div>
 

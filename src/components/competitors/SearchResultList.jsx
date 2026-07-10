@@ -18,7 +18,7 @@ const SearchResultList = ({
 
   const handleTrackSelected = () => {
     const companies = scanResults.filter((company) =>
-      selectedCompanies.includes(company.name)
+      selectedCompanies.includes(company.company_name)
     );
 
     onConfirmTracking(companies);
@@ -66,9 +66,9 @@ const SearchResultList = ({
 
         {scanResults.map((company) => (
           <SearchResultCard
-            key={company.name}
+            key={company.company_name}
             company={company}
-            selected={selectedCompanies.includes(company.name)}
+            selected={selectedCompanies.includes(company.company_name)}
             onToggle={toggleSelect}
           />
         ))}

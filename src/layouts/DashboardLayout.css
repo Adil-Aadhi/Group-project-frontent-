@@ -19,6 +19,8 @@
   overflow-y: auto;
   overflow-x: hidden;
   min-height: 0;
+   padding: 24px 32px 32px;
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {

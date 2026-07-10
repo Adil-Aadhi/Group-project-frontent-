@@ -53,45 +53,53 @@ const TwitterIcon = ({ size = 13, className = "" }) => (
   </svg>
 );
 
-export default function CompetitorCard({ competitor, onDelete }) {
+export default function CompetitorCard({ competitor, onDelete, onAnalyze }) {
   const [showMenu, setShowMenu] = useState(false);
 
-  // Destructure safe defaults directly from database names
   const {
     id,
-    name = "HubSpot",
-    website = "hubspot.com",
-    category = "CRM / Marketing",
-    growth_score = 68,
-    growth_change = "+14.2",
-    type = "Manual",
-    last_checked = "18 min ago",
-    monitoring = { linkedin: true, instagram: true, twitter: true }
+    company_name,
+    website_url,
+    industry,
+    location,
+    description,
+    created_at,
+    source,
   } = competitor || {};
 
-  const isPositive = !growth_change.toString().startsWith("-");
+  const growth_score = 0;
+  const growth_change = 0;
+  const last_checked = "Just now";
+
+  const monitoring = {
+    linkedin: false,
+    instagram: false,
+    twitter: false,
+  };
+
+  const isPositive = growth_change >= 0;
 
   return (
-    <div className="bg-white border border-slate-100 rounded-[24px] p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between min-h-[270px] relative font-sans">
+    <div className="bg-white rounded-3xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between overflow-hidden">
       
       {/* Container holding top section content tightly */}
       <div>
         {/* Top Identity Row */}
         <div className="flex items-start justify-between mb-4">
-          <div className="flex items-center gap-3">
+          <div className="flex gap-4">
             {/* Softly curved Avatar Block */}
             <div className="w-11 h-11 rounded-xl bg-orange-500 text-white font-bold flex items-center justify-center text-base shadow-sm shadow-orange-500/10">
-              {name.substring(0, 2).toUpperCase()}
+              {company_name?.substring(0, 2).toUpperCase() || "--"}
             </div>
             <div>
-              <h3 className="font-bold text-slate-800 text-base leading-tight">{name}</h3>
+              <h3 className="font-bold text-slate-800 text-base leading-tight">{company_name}</h3>
               <a 
-                href={`https://${website}`} 
+                href={website_url}
                 target="_blank" 
                 rel="noreferrer" 
-                className="text-xs font-medium text-slate-400 hover:text-slate-600 flex items-center gap-1 mt-0.5"
+                className="flex items-center gap-1 mt-2 text-sm text-slate-500 hover:text-orange-500"
               >
-                <Globe size={12} className="text-slate-400" /> {website}
+                <Globe size={12} className="text-slate-400" /> {website_url}
               </a>
             </div>
           </div>
@@ -99,11 +107,11 @@ export default function CompetitorCard({ competitor, onDelete }) {
           {/* Action pills & options box anchor */}
           <div className="flex items-center gap-1.5">
             <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wide border capitalize ${
-              type.toLowerCase() === "manual" 
+              (source || "manual").toLowerCase() === "manual"
                 ? "bg-slate-50 text-slate-500 border-slate-100" 
                 : "bg-blue-50 text-blue-600 border-blue-100/50"
             }`}>
-              {type}
+              {source || "Manual"}
             </span>
             
             <div className="relative">
@@ -132,12 +140,12 @@ export default function CompetitorCard({ competitor, onDelete }) {
         {/* Category Pill Tag Block */}
         <div className="mb-5 flex">
           <span className="px-2.5 py-0.5 bg-orange-50/60 text-orange-600 text-[11px] font-bold rounded-lg border border-orange-100/40">
-            {category}
+            {industry || "Unknown"}
           </span>
         </div>
 
         {/* Progress Metrics Section */}
-        <div className="space-y-1.5">
+        {/* <div className="space-y-1.5">
           <div className="flex items-center justify-between text-xs font-bold">
             <span className="text-slate-400 font-medium">Growth Score</span>
             <div className="flex items-center gap-1 text-slate-800">
@@ -154,7 +162,7 @@ export default function CompetitorCard({ competitor, onDelete }) {
               style={{ width: `${Math.min(growth_score, 100)}%` }}
             />
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Baseline structural items grouping footer elements cleanly at the bottom */}
@@ -183,7 +191,10 @@ export default function CompetitorCard({ competitor, onDelete }) {
         </div>
 
         {/* View Details Call To Action Button */}
-        <button className="w-full py-2 border border-slate-200 hover:border-slate-300 hover:bg-slate-50/50 rounded-xl text-xs font-bold text-slate-700 transition-all text-center">
+        <button
+          onClick={() => onAnalyze(competitor)}
+          className="w-full py-2 border border-slate-200 hover:border-slate-300 hover:bg-slate-50/50 rounded-xl text-xs font-bold text-slate-700 transition-all text-center"
+        >
           View Analysis
         </button>
       </div>
