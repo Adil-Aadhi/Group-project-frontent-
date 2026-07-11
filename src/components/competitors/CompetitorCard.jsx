@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { MoreHorizontal, Globe, ArrowUpRight, ArrowDownRight } from "lucide-react";
+import './CompetitorCard.css'
 
 // Custom inline SVG for LinkedIn
 const LinkedinIcon = ({ size = 13, className = "" }) => (
@@ -67,8 +68,6 @@ export default function CompetitorCard({ competitor, onDelete, onAnalyze }) {
     source,
   } = competitor || {};
 
-  const growth_score = 0;
-  const growth_change = 0;
   const last_checked = "Just now";
 
   const monitoring = {
@@ -77,128 +76,186 @@ export default function CompetitorCard({ competitor, onDelete, onAnalyze }) {
     twitter: false,
   };
 
-  const isPositive = growth_change >= 0;
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between overflow-hidden">
-      
-      {/* Container holding top section content tightly */}
-      <div>
-        {/* Top Identity Row */}
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex gap-4">
-            {/* Softly curved Avatar Block */}
-            <div className="w-11 h-11 rounded-xl bg-orange-500 text-white font-bold flex items-center justify-center text-base shadow-sm shadow-orange-500/10">
+   <div className="competitor-card">
+
+      <div className="card-content">
+
+        {/* ================= HEADER ================= */}
+
+        <div className="card-header">
+
+          <div className="company-info">
+
+            <div className="company-avatar">
               {company_name?.substring(0, 2).toUpperCase() || "--"}
             </div>
-            <div>
-              <h3 className="font-bold text-slate-800 text-base leading-tight">{company_name}</h3>
-              <a 
+
+            <div className="company-details">
+
+              <h3 className="company-name">
+                {company_name}
+              </h3>
+
+              <a
                 href={website_url}
-                target="_blank" 
-                rel="noreferrer" 
-                className="flex items-center gap-1 mt-2 text-sm text-slate-500 hover:text-orange-500"
+                target="_blank"
+                rel="noreferrer"
+                className="company-website"
               >
-                <Globe size={12} className="text-slate-400" /> {website_url}
+                <Globe
+                  size={12}
+                  className="website-icon"
+                />
+
+                {website_url}
               </a>
+
             </div>
+
           </div>
 
-          {/* Action pills & options box anchor */}
-          <div className="flex items-center gap-1.5">
-            <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wide border capitalize ${
-              (source || "manual").toLowerCase() === "manual"
-                ? "bg-slate-50 text-slate-500 border-slate-100" 
-                : "bg-blue-50 text-blue-600 border-blue-100/50"
-            }`}>
+          <div className="card-actions">
+
+            <span
+              className={`source-badge ${
+                (source || "manual").toLowerCase() === "manual"
+                  ? "manual"
+                  : "auto"
+              }`}
+            >
               {source || "Manual"}
             </span>
-            
-            <div className="relative">
-              <button 
-                onClick={() => setShowMenu(!showMenu)} 
-                className="p-1.5 hover:bg-slate-50 rounded-lg text-slate-400 hover:text-slate-600 transition-colors"
+
+            <div className="menu-wrapper">
+
+              <button
+                onClick={() => setShowMenu(!showMenu)}
+                className="menu-button"
               >
                 <MoreHorizontal size={18} />
               </button>
+
               {showMenu && (
-                <div className="absolute right-0 mt-1 w-40 bg-white border border-slate-100 rounded-xl shadow-lg z-20 py-1.5 text-xs font-semibold text-slate-600">
-                  <button className="w-full text-left px-4 py-2 hover:bg-slate-50">Edit competitor</button>
-                  <button className="w-full text-left px-4 py-2 hover:bg-slate-50">Pause monitoring</button>
-                  <button 
-                    className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50" 
-                    onClick={() => { onDelete(id); setShowMenu(false); }}
+
+                <div className="action-menu">
+
+                  <button className="menu-item">
+                    Edit competitor
+                  </button>
+
+                  <button className="menu-item">
+                    Pause monitoring
+                  </button>
+
+                  <button
+                    className="menu-item delete"
+                    onClick={() => {
+                      onDelete(id);
+                      setShowMenu(false);
+                    }}
                   >
                     Delete
                   </button>
+
                 </div>
+
               )}
+
             </div>
+
           </div>
+
         </div>
 
-        {/* Category Pill Tag Block */}
-        <div className="mb-5 flex">
-          <span className="px-2.5 py-0.5 bg-orange-50/60 text-orange-600 text-[11px] font-bold rounded-lg border border-orange-100/40">
+        {/* ================= INDUSTRY ================= */}
+
+        <div className="industry-section">
+
+          <span className="industry-badge">
             {industry || "Unknown"}
           </span>
+
         </div>
 
-        {/* Progress Metrics Section */}
-        {/* <div className="space-y-1.5">
-          <div className="flex items-center justify-between text-xs font-bold">
-            <span className="text-slate-400 font-medium">Growth Score</span>
-            <div className="flex items-center gap-1 text-slate-800">
-              <span className="text-sm font-black">{growth_score}</span>
-              <span className={`flex items-center text-[11px] ${isPositive ? "text-emerald-600" : "text-red-500"}`}>
-                {isPositive ? <ArrowUpRight size={13} strokeWidth={2.5} /> : <ArrowDownRight size={13} strokeWidth={2.5} />}
-                {isPositive ? "+" : ""}{growth_change}%
-              </span>
-            </div>
-          </div>
-          <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-            <div 
-              className={`h-full rounded-full transition-all duration-500 ${isPositive ? "bg-emerald-500" : "bg-orange-500"}`} 
-              style={{ width: `${Math.min(growth_score, 100)}%` }}
-            />
-          </div>
-        </div> */}
+
       </div>
 
-      {/* Baseline structural items grouping footer elements cleanly at the bottom */}
-      <div className="flex flex-col gap-3">
-        {/* Border Dividers & Live Status Nodes */}
-        <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-semibold text-slate-400">
-          <span className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+      {/* ================= FOOTER ================= */}
+
+      <div className="card-footer">
+
+        <div className="status-row">
+
+          <span className="last-checked">
+
+            <span className="status-dot" />
+
             Last checked {last_checked}
+
           </span>
 
-          <div className="flex items-center gap-2.5">
-            <span className={`flex items-center gap-0.5 ${monitoring.linkedin ? "text-slate-600" : "text-slate-300"}`}>
-              <LinkedinIcon size={12} className={monitoring.linkedin ? "text-blue-600" : "text-slate-300"} /> 
+          <div className="social-status">
+
+            <span
+              className={`social-item ${
+                monitoring.linkedin ? "active" : ""
+              }`}
+            >
+
+              <LinkedinIcon
+                size={12}
+                className="linkedin-icon"
+              />
+
               {monitoring.linkedin ? "On" : "Off"}
+
             </span>
-            <span className={`flex items-center gap-0.5 ${monitoring.instagram ? "text-slate-600" : "text-slate-300"}`}>
-              <InstagramIcon size={12} className={monitoring.instagram ? "text-pink-500" : "text-slate-300"} /> 
+
+            <span
+              className={`social-item ${
+                monitoring.instagram ? "active" : ""
+              }`}
+            >
+
+              <InstagramIcon
+                size={12}
+                className="instagram-icon"
+              />
+
               {monitoring.instagram ? "On" : "Off"}
+
             </span>
-            <span className={`flex items-center gap-0.5 ${monitoring.twitter ? "text-slate-600" : "text-slate-300"}`}>
-              <TwitterIcon size={12} className={monitoring.twitter ? "text-sky-400" : "text-slate-300"} /> 
+
+            <span
+              className={`social-item ${
+                monitoring.twitter ? "active" : ""
+              }`}
+            >
+
+              <TwitterIcon
+                size={12}
+                className="twitter-icon"
+              />
+
               {monitoring.twitter ? "On" : "Off"}
+
             </span>
+
           </div>
+
         </div>
 
-        {/* View Details Call To Action Button */}
         <button
           onClick={() => onAnalyze(competitor)}
-          className="w-full py-2 border border-slate-200 hover:border-slate-300 hover:bg-slate-50/50 rounded-xl text-xs font-bold text-slate-700 transition-all text-center"
+          className="analyze-button"
         >
           View Analysis
         </button>
+
       </div>
 
     </div>
-  );
+      );
 }

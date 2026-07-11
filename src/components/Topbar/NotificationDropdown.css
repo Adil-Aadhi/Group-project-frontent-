@@ -1,21 +1,45 @@
 .notification-dropdown {
-  position: absolute;
-  top: 100%;
-  right: -80px;
-  /* Adjust to align with the bell but not go off-screen */
+  position: fixed;
   width: 380px;
-  background-color: var(--bg);
-  border: 1px solid var(--border);
   border-radius: 12px;
-  box-shadow: 0 10px 30px color-mix(in srgb, var(--border) 40%, transparent);
-  margin-top: 12px;
-  z-index: 100;
   overflow: hidden;
+
+  /* 1. Frosted glass base */
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+
+  /* 2. Crisp border + soft glow */
+  border: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.08) inset;
+
+  z-index: 99999;
+}
+
+/* subtle sheen, matches topbar */
+.notification-dropdown::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.06) 0%,
+      transparent 40%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.notif-header,
+.notif-list,
+.notif-footer {
+  position: relative;
+  z-index: 2;
 }
 
 .notif-header {
   padding: 16px 20px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
 }
 
 .notif-header h3 {
@@ -33,14 +57,14 @@
 .notif-item {
   display: flex;
   padding: 16px 20px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
   gap: 12px;
   transition: background-color 0.2s;
   cursor: pointer;
 }
 
 .notif-item:hover {
-  background-color: var(--surface);
+  background-color: color-mix(in srgb, var(--surface) 60%, transparent);
 }
 
 .notif-indicator {

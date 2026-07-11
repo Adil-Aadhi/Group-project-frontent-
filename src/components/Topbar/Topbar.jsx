@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef  } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Bell, Search, Zap } from 'lucide-react';
 import NotificationDropdown from './NotificationDropdown';
 import './Topbar.css';
 import ThemeToggle from '../ui/ThemeToggle';
+
+import { createPortal } from "react-dom";
 
 const PAGE_TITLES = {
   '/dashboard': 'Dashboard',
@@ -19,6 +21,8 @@ const Topbar = () => {
 
   const toggleNotif = () => setIsNotifOpen(!isNotifOpen);
 
+  const bellRef = useRef(null);
+
   const pageTitle = PAGE_TITLES[location.pathname] || 'Dashboard';
 
   return (
@@ -28,34 +32,28 @@ const Topbar = () => {
           <h2>{pageTitle}</h2>
           <span className="live-badge">Live</span>
         </div>
-
-        {/* <div className="search-section">
-          <Search size={18} className="search-icon" />
-          <input
-            type="text"
-            placeholder="Search competitors, alerts, insights..."
-            className="search-input"
-          />
-          <span className="shortcut-hint">⌘K</span>
-        </div> */}
       </div>
 
      
 
-        {/* <button className="quick-scan-btn">
-          <Zap size={16} /> Quick Scan
-        </button> */}
 
       {/* </div> */}
 
       <div className="topbar-right">
          <ThemeToggle />
         <div className="notification-container">
-          <button className="notif-btn" onClick={toggleNotif}>
+          <button className="notif-btn" onClick={toggleNotif} ref={bellRef}>
             <Bell size={20} />
             <span className="notif-dot"></span>
           </button>
-          {isNotifOpen && <NotificationDropdown onClose={() => setIsNotifOpen(false)} />}
+          {isNotifOpen &&
+            createPortal(
+                <NotificationDropdown
+                    anchorRef={bellRef}
+                    onClose={() => setIsNotifOpen(false)}
+                />,
+                document.body
+            )}
         </div>
 
         <div className="user-profile">

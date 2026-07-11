@@ -6,6 +6,7 @@ export const useAuthStore = create((set) => ({
     slug: null,
     companyId: null,
     isAuthenticated: false,
+    isInitializing: true,
 
     setAuth: (token) => {
         const decoded = jwtDecode(token);
@@ -16,10 +17,14 @@ export const useAuthStore = create((set) => ({
             slug: decoded.slug,
             companyId: decoded.sub,
             isAuthenticated: true,
+            isInitializing: false,
         });
-
-
     },
+
+    finishInitialization: () =>
+        set({
+            isInitializing: false,
+        }),
 
     logout: () =>
         set({
@@ -27,5 +32,6 @@ export const useAuthStore = create((set) => ({
             slug: null,
             companyId: null,
             isAuthenticated: false,
+            isInitializing: false,
         }),
 }));

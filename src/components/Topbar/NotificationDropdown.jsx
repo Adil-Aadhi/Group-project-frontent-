@@ -1,13 +1,25 @@
 import React, { useRef, useEffect } from 'react';
 import './NotificationDropdown.css';
 
-const NotificationDropdown = ({ onClose }) => {
+const NotificationDropdown = ({ anchorRef, onClose }) => {
   const dropdownRef = useRef(null);
+
+  const rect = anchorRef.current?.getBoundingClientRect();
+
+  const dropdownStyle = rect
+    ? {
+        position: "fixed",
+        top: rect.bottom + 12,
+        right: window.innerWidth - rect.right,
+    }
+    : {};
 
   // Close on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      if (dropdownRef.current && 
+          !dropdownRef.current.contains(event.target) &&
+          !anchorRef.current?.contains(event.target)) {
         onClose();
       }
     };
@@ -43,7 +55,7 @@ const NotificationDropdown = ({ onClose }) => {
   ];
 
   return (
-    <div className="notification-dropdown" ref={dropdownRef}>
+    <div className="notification-dropdown" ref={dropdownRef}  style={dropdownStyle}>
       <div className="notif-header">
         <h3>Notifications</h3>
       </div>

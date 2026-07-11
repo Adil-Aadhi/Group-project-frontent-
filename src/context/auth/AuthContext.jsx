@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState,useRef } from "react";
 import {
   registerCompany,
   loginCompany,
@@ -18,18 +18,25 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const { setAuth, isAuthenticated } = useAuthStore();
 
+  const initialized = useRef(false);
+
+
   useEffect(() => {
+
+    if (initialized.current) return;
+    initialized.current = true;
+
     const restoreSession = async () => {
       try {
-        setLoading(true);
         const data = await refreshAccessToken();
-
         setAuth(data.access_token);
         console.log("Restored:", useAuthStore.getState());
       } catch (error) {
         console.log("No active session");
-      } finally { setLoading(false); }
-
+        useAuthStore.getState().logout();
+      } finally { 
+        useAuthStore.getState().finishInitialization();
+       }
     };
 
     restoreSession();
