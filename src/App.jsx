@@ -5,6 +5,7 @@ import DashboardLayout from "./layouts/DashboardLayout";
 import DashboardOverview from "./pages/Dashboard/DashboardOverview";
 import CompetitorsPage from "./pages/Competitors/CompetitorsPage";
 import { Insights, Reports, CEOBriefing } from "./pages/Dashboard/DummyPages";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
   return (
@@ -12,13 +13,15 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/auth" replace />} />
         <Route path="/auth" element={<AuthPage />} />
-        <Route path="/dashboard" element={<DashboardLayout  />}>
-          <Route index element={<DashboardOverview />} />
-          <Route path="overview" element={<Navigate to="/dashboard" replace />} />
-          <Route path="competitors" element={<CompetitorsPage />} />
-          <Route path="insights" element={<Insights />} />
-          <Route path="reports" element={<Reports />} />
-          <Route path="ceo-briefing" element={<CEOBriefing />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<DashboardLayout  />}>
+            <Route index element={<DashboardOverview />} />
+            <Route path="overview" element={<Navigate to="/dashboard" replace />} />
+            <Route path="competitors" element={<CompetitorsPage />} />
+            <Route path="insights" element={<Insights />} />
+            <Route path="reports" element={<Reports />} />
+            <Route path="ceo-briefing" element={<CEOBriefing />} />
+          </Route>
         </Route>
         <Route path="*" element={<Navigate to="/auth" replace />} />
       </Routes>

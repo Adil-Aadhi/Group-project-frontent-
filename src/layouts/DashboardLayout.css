@@ -1,16 +1,17 @@
 .dashboard-layout {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;          /* change */
+  overflow: hidden;
   background-color: var(--surface-2);
 }
 
 .dashboard-main {
   flex: 1;
   display: flex;
+  position: relative;   /* <-- new: anchor for the absolutely-positioned Topbar */
   flex-direction: column;
   min-width: 0;
-  min-height: 100vh;
-  max-width: 100%;
+  height: 100vh;          /* change */
   overflow-x: hidden;
 }
 
@@ -18,8 +19,9 @@
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  min-height: 0;
-   padding: 24px 32px 32px;
+  /* padding: 24px 32px 32px; */
+  padding: 96px 32px 32px;  /* <-- top padding = topbar height (72px) + breathing room, so content starts below it visually but still scrolls underneath */
+
   box-sizing: border-box;
 }
 

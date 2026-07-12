@@ -2,17 +2,33 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 32px; /* was 12px 24px — now matches px-8 content padding */
-  background-color: var(--bg);
-  border-bottom: 1px solid var(--border);
-  height: 72px; /* was 64px, gives a bit more breathing room like the reference */
+  padding: 16px 32px;
+  height: 72px;
   box-sizing: border-box;
+
+  position: absolute;   /* <-- was static/in-flow before; now floats over scroll-area */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  overflow: hidden;
+
+  clip-path: inset(0);
+
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+
+  border-bottom: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
+  
 }
 
-.topbar-left {
-  display: flex;
-  align-items: center;
-  gap: 32px;
+
+
+.topbar-left,
+.topbar-right {
+  position: relative;
+  z-index: 2;
 }
 
 .logo-section {
