@@ -236,8 +236,10 @@ export default function CompetitorsPage() {
             onConfirmTracking={async (selected) => {
               try {
                 setIsActionLoading(true);
+                console.log("Selected:", selected);
 
-                await competitorService.trackSelectedCompetitors(selected);
+                const response= await competitorService.trackSelectedCompetitors(selected);
+                console.log("Track Response:", response);
 
                 await fetchWorkspaceCompetitors();
 

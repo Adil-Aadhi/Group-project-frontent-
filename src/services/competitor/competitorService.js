@@ -44,7 +44,7 @@ export const competitorService = {
 
   deleteCompetitor: async (competitorId) => {
     const response = await api.delete(
-      `/competitors/${competitorId}/`
+      `/competitors/${competitorId}`
     );
 
     return response.data;
