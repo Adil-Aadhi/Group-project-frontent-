@@ -1,0 +1,372 @@
+.compare-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.compare-card-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.compare-card .card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.compare-freshness {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.compare-card-empty {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin: 0;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.compare-section {
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+.compare-section:first-of-type {
+  padding-top: 0;
+  border-top: none;
+}
+
+.compare-section-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 12px 0;
+}
+
+.compare-section-empty {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin: 0;
+}
+
+/* Positioning summary */
+.positioning-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.positioning-summary-block span.positioning-summary-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 6px;
+}
+
+.positioning-summary-block p {
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.positioning-tone-note {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: var(--surface-2);
+  border-radius: 10px;
+}
+
+.positioning-tone-note svg {
+  color: var(--primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.positioning-tone-note p {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Gap columns */
+.gap-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.gap-column-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0 0 8px 0;
+}
+
+.gap-column-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.gap-column-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.gap-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.gap-icon-positive {
+  color: var(--success);
+}
+
+.gap-icon-negative {
+  color: var(--danger);
+}
+
+.gap-column-empty {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin: 0;
+}
+
+.gap-overlap {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: var(--surface-2);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.gap-overlap-label {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Social presence table */
+.social-gap-table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.social-gap-row {
+  display: grid;
+  grid-template-columns: 1fr 60px 100px;
+  align-items: center;
+  padding: 9px 14px;
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border);
+}
+
+.social-gap-row:last-child {
+  border-bottom: none;
+}
+
+.social-gap-row-header {
+  background: var(--surface-2);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.social-gap-platform {
+  font-weight: 500;
+}
+
+.social-gap-callout {
+  margin-top: 12px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Reputation */
+.reputation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.reputation-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+}
+
+.reputation-rating {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 10px 0;
+}
+
+.reputation-block .gap-column {
+  margin-bottom: 12px;
+}
+
+/* Recommendations */
+.recommendation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.recommendation-item {
+  padding: 12px 14px;
+  background: var(--surface-2);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+.recommendation-item-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.recommendation-action {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.recommendation-why {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.recommendation-why svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--text-secondary);
+}
+
+.priority-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.priority-badge-high {
+  background: rgba(220, 38, 38, 0.12);
+  color: var(--danger);
+}
+
+.priority-badge-medium {
+  background: rgba(255, 107, 0, 0.12);
+  color: var(--primary);
+}
+
+.priority-badge-low {
+  background: rgba(22, 163, 74, 0.12);
+  color: var(--success);
+}
+
+/* Trajectory */
+.trajectory-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.trajectory-item {
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: var(--surface-2);
+  border-radius: 8px;
+  font-size: 0.78rem;
+}
+
+.trajectory-date {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.trajectory-change {
+  color: var(--text-primary);
+}
+
+.trajectory-signal {
+  color: var(--text-secondary);
+  font-style: italic;
+  text-align: right;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .positioning-summary,
+  .gap-grid,
+  .reputation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .trajectory-item {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+
+  .trajectory-signal {
+    text-align: left;
+  }
+}
