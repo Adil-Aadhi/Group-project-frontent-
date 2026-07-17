@@ -64,3 +64,13 @@ export const competitorService = {
     return response.data;
   },
 };
+
+export const getAnalyzedCompetitor = async (competitorId) => {
+  try {
+    const response = await api.get(`/competitors/${competitorId}/analysis`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching analyzed competitor:", error);
+    throw error;
+  }
+};

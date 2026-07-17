@@ -1,0 +1,53 @@
+.social-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 22px;
+}
+
+.social-card .card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 14px 0;
+}
+
+.social-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.social-card-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.social-card-link:hover {
+  background: var(--surface-2);
+  color: var(--primary);
+}
+
+.social-card-link svg {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.social-card-link:hover svg {
+  color: var(--primary);
+}
+
+.social-card-empty {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin: 0;
+}
