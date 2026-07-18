@@ -60,10 +60,16 @@ export default function CompetitorsPage() {
   };
 
   const handleAddCompetitorSave = async (newCompetitorData) => {
+    
+    console.log("handleAddCompetitorSave called");
+
     setIsAddModalOpen(false);
     setIsActionLoading(true);
     try {
       const updatedList = await competitorService.addManualCompetitor(newCompetitorData);
+      
+      console.log("Response:", updatedList);
+
       setTrackedCompetitors((prev) => [...prev, updatedList]);
     } catch (err) {
       console.error("Manual tracking save failed", err);

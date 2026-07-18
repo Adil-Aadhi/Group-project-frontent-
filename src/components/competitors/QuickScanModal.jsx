@@ -1,10 +1,24 @@
 import React, { useState } from "react";
 import { X, Sparkles } from "lucide-react";
 
+
+const INDUSTRY_OPTIONS = [
+    "Software Development",
+    "Information Technology",
+    "IT Services",
+    "Software Training Institutes",
+    "Digital Marketing",
+    "FinTech",
+    "Healthcare",
+    "Education",
+    "E-commerce",
+  ];
+
 export default function QuickScanModal({ isOpen, onClose, onStartScan }) {
-  const [industry, setIndustry] = useState("E-commerce / Retail");
+  const [industry, setIndustry] = useState(INDUSTRY_OPTIONS[0]);
   const [district, setDistrict] = useState("");
   const [stateName, setStateName] = useState("");
+
 
   if (!isOpen) return null;
 
@@ -48,21 +62,16 @@ export default function QuickScanModal({ isOpen, onClose, onStartScan }) {
           {/* Industry Selection Field */}
           <div className="modal-field-group">
             <label className="modal-field-label">Industry</label>
-            <select 
-              value={industry} 
-              onChange={(e) => setIndustry(e.target.value)} 
+           <select
+              value={industry}
+              onChange={(e) => setIndustry(e.target.value)}
               className="modal-field-select"
             >
-              <option value="Software Development">Software Development</option>
-              <option value="Information Technology">Information Technology</option>
-              <option value="IT Services">IT Services</option>
-              <option value="Software Training Institutes">Software Training Institutes</option>
-              <option value="Digital Marketing">Digital Marketing</option>
-              <option value="FinTech">FinTech</option>
-              <option value="Healthcare">Healthcare</option>
-              <option value="Education">Education</option>
-              <option value="E-commerce">E-commerce</option>
-
+              {INDUSTRY_OPTIONS.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
             </select>
           </div>
 
