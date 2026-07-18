@@ -6,8 +6,6 @@ import AddCompetitorModal from "../../components/competitors/AddCompetitorModal"
 import SearchResultList from "../../components/competitors/SearchResultList";
 import { competitorService } from "../../services/competitor/competitorService";
 import "../../components/competitors/Competitors.css";
-import { useProgressStore } from "../../store/progressStore";
-import { useAuthStore } from "../../store/authStore";
 import './Competitors.css'
 
 export default function CompetitorsPage() {
@@ -19,9 +17,7 @@ export default function CompetitorsPage() {
   const [isActionLoading, setIsActionLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("all");
 
-  const { startJob } = useProgressStore();
 
-  const { slug } = useAuthStore()
 
   useEffect(() => {
     fetchWorkspaceCompetitors();
@@ -88,29 +84,6 @@ export default function CompetitorsPage() {
     }
   };
 
-
-
-  const handleAnalyze = async (competitor) => {
-    try {
-      setIsActionLoading(true);
-
-      const response = await competitorService.startAnalysis(competitor);
-
-      console.log("Analysis started:", response);
-
-      startJob({
-        companyId: `company_${slug}`,
-        companyName: response.company_name,
-        type: "competitor",
-      });
-
-      // Next we'll navigate to progress page
-    } catch (err) {
-      console.error("Failed to start analysis", err);
-    } finally {
-      setIsActionLoading(false);
-    }
-  };
 
   // Filter logic variables matching the tabs
   const manualCompetitors = trackedCompetitors.filter(c => c.source === "manual");
@@ -280,7 +253,6 @@ export default function CompetitorsPage() {
               key={competitor.id}
               competitor={competitor}
               onDelete={handleDeleteTracker}
-              onAnalyze={handleAnalyze}
             />
 
           ))}

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MoreHorizontal, Globe, ArrowUpRight, ArrowDownRight } from "lucide-react";
 import './CompetitorCard.css'
+import { useNavigate } from "react-router-dom";
 
 // Custom inline SVG for LinkedIn
 const LinkedinIcon = ({ size = 13, className = "" }) => (
@@ -54,8 +55,10 @@ const TwitterIcon = ({ size = 13, className = "" }) => (
   </svg>
 );
 
-export default function CompetitorCard({ competitor, onDelete, onAnalyze }) {
+export default function CompetitorCard({ competitor, onDelete }) {
   const [showMenu, setShowMenu] = useState(false);
+
+  const navigate=useNavigate()
 
   const {
     id,
@@ -247,10 +250,18 @@ export default function CompetitorCard({ competitor, onDelete, onAnalyze }) {
 
         </div>
 
-        <button
+        {/* <button
           onClick={() => onAnalyze(competitor)}
           className="analyze-button"
-        >
+        > */}
+        <button
+            onClick={() =>
+              navigate(`/dashboard/competitors/${id}`, {
+                state: { competitor },
+              })
+            }
+            className="analyze-button"
+          >
           View Analysis
         </button>
 

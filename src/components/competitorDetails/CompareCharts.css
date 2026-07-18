@@ -1,0 +1,154 @@
+/* Offering gap bar chart */
+.offering-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.offering-chart-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 32px;
+  align-items: center;
+  gap: 10px;
+}
+
+.offering-chart-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: right;
+}
+
+.offering-chart-track {
+  height: 10px;
+  background: var(--surface-2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.offering-chart-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.offering-chart-fill-us {
+  background: var(--success);
+}
+
+.offering-chart-fill-them {
+  background: var(--danger);
+}
+
+.offering-chart-value {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.offering-chart-note {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin: 0;
+  font-style: italic;
+}
+
+/* Social coverage bar chart */
+.coverage-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.coverage-chart-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 48px;
+  align-items: center;
+  gap: 10px;
+}
+
+.coverage-chart-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: right;
+}
+
+.coverage-chart-track {
+  height: 10px;
+  background: var(--surface-2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.coverage-chart-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.coverage-chart-fill-us {
+  background: var(--primary);
+}
+
+.coverage-chart-fill-them {
+  background: var(--text-secondary);
+}
+
+.coverage-chart-value {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: right;
+}
+
+/* Priority distribution mini-bar */
+.priority-dist {
+  margin-bottom: 14px;
+}
+
+.priority-dist-bar {
+  display: flex;
+  height: 8px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+
+.priority-dist-segment {
+  height: 100%;
+}
+
+.priority-dist-high {
+  background: var(--danger);
+}
+
+.priority-dist-medium {
+  background: var(--primary);
+}
+
+.priority-dist-low {
+  background: var(--success);
+}
+
+.priority-dist-legend {
+  display: flex;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.priority-dist-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+
+.priority-dist-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}

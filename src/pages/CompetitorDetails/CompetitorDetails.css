@@ -1,0 +1,183 @@
+.competitor-details {
+  padding: 28px;
+  background: var(--bg);
+  min-height: 100vh;
+  color: var(--text-primary);
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  margin-top: 22px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px;
+  transition: 0.25s;
+}
+
+.card:hover {
+  border-color: var(--primary);
+}
+
+/* ================= ANALYZE BUTTON ================= */
+
+.analyze-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 12px 22px;
+
+  background: var(--primary);
+  color: #fff;
+
+  border: none;
+  border-radius: 12px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 20px rgba(255, 107, 0, 0.18);
+}
+
+.analyze-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(255, 107, 0, 0.28);
+}
+
+.analyze-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(255, 107, 0, 0.18);
+}
+
+.analyze-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ================= CIRCULAR ANALYSIS PROGRESS ================= */
+
+.analysis-progress-page {
+  max-width: 480px;
+  margin: 100px auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.progress-ring-wrapper {
+  position: relative;
+  width: 220px;
+  height: 220px;
+}
+
+.progress-ring {
+  transform: rotate(0deg);
+}
+
+.progress-ring-track {
+  stroke: var(--border);
+}
+
+.progress-ring-fill {
+  stroke: var(--primary);
+  transition: stroke-dashoffset 0.35s ease;
+}
+
+.progress-ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 20px;
+}
+
+.progress-ring-company {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.progress-ring-percent {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.analysis-status-text {
+  margin-top: 24px;
+  color: var(--text-secondary, #6b7280);
+  font-size: 14px;
+}
+
+.analysis-error {
+  color: #dc2626;
+  margin-top: 12px;
+}
+
+/* ================= TOP BAR + RE-ANALYZE BUTTON ================= */
+
+.details-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.reanalyze-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.reanalyze-btn:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.reanalyze-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.reanalyze-btn .spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
