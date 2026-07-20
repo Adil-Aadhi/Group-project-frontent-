@@ -1,5 +1,5 @@
 .company-info-card {
-  background: var(--surface);
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 20px 22px;
