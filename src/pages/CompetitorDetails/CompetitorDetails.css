@@ -2,7 +2,15 @@
   padding: 28px;
   background: var(--bg);
   min-height: 100vh;
+  background: transparent;
   color: var(--text-primary);
+}
+
+.loading-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 0;
 }
 
 .details-grid {
@@ -13,15 +21,17 @@
 }
 
 .card {
-  background: var(--surface);
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 18px;
   padding: 22px;
-  transition: 0.25s;
+  transition: 0.25s ease;
 }
 
 .card:hover {
   border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.08);
 }
 
 /* ================= ANALYZE BUTTON ================= */
@@ -72,10 +82,16 @@
 .analysis-progress-page {
   max-width: 480px;
   margin: 100px auto;
-  text-align: center;
+  padding: 36px;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 
 .progress-ring-wrapper {

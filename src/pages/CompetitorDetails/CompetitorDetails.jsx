@@ -12,6 +12,7 @@ import SocialCard from "../../components/competitorDetails/SocialCard";
 import TrendChart from "../../components/competitorDetails/TrendChart";
 import CompareCard from "../../components/competitorDetails/CompareCard";
 import DetailTabs from "../../components/competitorDetails/DetailTabs";
+import { Loader2 } from "lucide-react";
 
 import { useCompetitorAnalysis } from "../../hooks/Compitetor/useCompetitorAnalysis";
 import { useAuthStore } from "../../store/authStore";
@@ -98,6 +99,8 @@ export default function CompetitorDetails() {
   const [data, setData] = useState(null); // normalized response
   const [checkingExisting, setCheckingExisting] = useState(true);
 
+  const [wsReconnectKey, setWsReconnectKey] = useState(0);
+
 
 
   // TEMP DEBUG: countdown while we wait for background comparison job
@@ -165,6 +168,8 @@ const countdownIntervalRef = useRef(null);
     const companyId = `company_${slug}`;
     let isActive = true;
 
+    console.log("DETAILS WS EFFECT MOUNT");
+
     const ws = new WebSocket(
       `ws://127.0.0.1:8000/api/v1/ws/progress/${companyId}`
     );
@@ -173,8 +178,11 @@ const countdownIntervalRef = useRef(null);
     ws.onclose = (e) => console.log("WS closed:", e.code, e.reason);
 
     ws.onmessage = (event) => {
+      
       if (!isActive) return;
       const msg = JSON.parse(event.data);
+
+      console.log("DETAILS MSG", msg)
 
       setProgress(msg.progress);
       setStatus(msg.status);
@@ -253,9 +261,10 @@ const countdownIntervalRef = useRef(null);
       };
 
       
-  }, [slug]);
+  }, [slug,wsReconnectKey]);
 
   const handleReanalyze = () => {
+    setWsReconnectKey(prev => prev + 1);
     setIsReanalyzing(true);
     setAnalysisDone(false);
     setProgress(0);
@@ -270,7 +279,8 @@ const countdownIntervalRef = useRef(null);
   }
 
   if (checkingExisting) {
-    return <div className="competitor-details">Loading...</div>;
+    return <div className="loading-wrapper"><Loader2 size={38}
+            className="loading-spinner"/></div>;
   }
 
   if (!analysisDone) {
@@ -323,11 +333,9 @@ const countdownIntervalRef = useRef(null);
   return (
     <div className="competitor-details">
       <div className="details-top-bar">
-        <CompanyHeader company={company} />
-        <button className="reanalyze-btn" onClick={handleReanalyze} disabled={isReanalyzing}>
-          <RefreshCw size={15} className={isReanalyzing ? "spin" : ""} />
-          {isReanalyzing ? "Re-analyzing..." : "Re-analyze"}
-        </button>
+        <CompanyHeader company={company}
+                        onReanalyze={handleReanalyze}
+                        isReanalyzing={isReanalyzing} />
       </div>
 
       <MetricCards metrics={metrics} />

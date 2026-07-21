@@ -5,7 +5,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 
 const CrawlerProgress = ({ job }) => {
 
-    console.log("CrawlerProgress rendered, job=", job);
+    // console.log("CrawlerProgress rendered, job=", job);
 
     const [progress, setProgress] = useState(0);
     const [status, setStatus] = useState("");
