@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { X } from "lucide-react";
 
 const INDUSTRY_OPTIONS = [
-  "Healthcare / MedTech",
-  "E-commerce / Retail",
-  "SaaS / Software",
-  "Fintech",
-  "CRM / Marketing",
+  "Software Development",
+  "Information Technology",
+  "IT Services",
+  "Software Training Institutes",
+  "Digital Marketing",
+  "FinTech",
+  "Healthcare",
   "Education",
-  "Other",
+  "E-commerce",
 ];
 
 export default function AddCompetitorModal({ isOpen, onClose, onSave }) {
@@ -23,8 +25,19 @@ export default function AddCompetitorModal({ isOpen, onClose, onSave }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave({ name, website, linkedin,industry, instagram, twitter });
-    // Reset fields after save
+
+    const competitorData = {
+      company_name: name,
+      website_url: website,
+      industry: industry,
+      location: "",
+      description: "",
+    };
+
+    console.log("Manual Competitor Payload:", competitorData);
+
+    onSave(competitorData);
+
     setName("");
     setWebsite("");
     setIndustry(INDUSTRY_OPTIONS[0]);
