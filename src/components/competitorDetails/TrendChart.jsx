@@ -10,7 +10,7 @@ export default function TrendChart() {
           height: "250px",
           display: "flex",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
         Chart Placeholder

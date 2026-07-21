@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: 8px;
   padding: 20px 24px;
-  background: var(--surface);
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 14px;
   flex: 1;
@@ -56,4 +56,72 @@
   font-size: 0.75rem;
   color: var(--text-secondary);
   margin-left: auto;
+}
+
+.company-header-footer {
+    margin-top: 18px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    flex-wrap: wrap;
+}
+
+.company-header-updated {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.reanalyze-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 10px 18px;
+
+    background: var(--primary);
+    color: #fff;
+
+    border: none;
+    border-radius: 12px;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all .25s ease;
+}
+
+.reanalyze-btn:hover:not(:disabled) {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+.reanalyze-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .company-header-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .reanalyze-btn {
+        width: 100%;
+    }
 }
