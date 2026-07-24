@@ -103,12 +103,6 @@ export default function CompetitorDetails() {
 
 
 
-  // TEMP DEBUG: countdown while we wait for background comparison job
-const COMPARISON_WAIT_SECONDS = 180; // 3 min - remove once backend notifies us properly
-const [compareCountdown, setCompareCountdown] = useState(null);
-const countdownIntervalRef = useRef(null);
-
-
 
 
 
@@ -162,106 +156,184 @@ const countdownIntervalRef = useRef(null);
   }, [competitor]);
 
   // 2) Track progress via websocket
-  useEffect(() => {
-    if (!slug) return;
+ useEffect(() => {
+  if (!slug || analysisDone) return;
 
-    const companyId = `company_${slug}`;
-    let isActive = true;
+  const companyId = `company_${slug}`;
+  let isActive = true;
+  let crawlerWs = null;
+  let etlWs = null;
 
-    console.log("DETAILS WS EFFECT MOUNT");
+  const finishAnalysis = async () => {
+    if (!isActive) return;
 
-    const ws = new WebSocket(
-      `ws://127.0.0.1:8000/api/v1/ws/progress/${companyId}`
+    try {
+      setStatus("Loading analysis data...");
+
+      const fresh = await fetchExistingAnalysis();
+
+      if (!isActive) return;
+
+      if (fresh) {
+        setData(fresh);
+      }
+
+      setProgress(100);
+      setAnalysisDone(true);
+      setIsReanalyzing(false);
+    } catch (err) {
+      console.error("Failed to fetch final analysis:", err);
+      setError("Failed to load analysis data");
+      setIsReanalyzing(false);
+    }
+  };
+
+  const connectEtlWebSocket = () => {
+    console.log("4. connectEtlWebSocket CALLED");
+    console.log("slug:", slug);
+    console.log("isActive:", isActive);
+
+    if (!isActive) {
+    console.log("❌ ETL NOT CONNECTED because isActive=false");
+    return;
+  }
+
+    
+
+    console.log("Connecting ETL WebSocket:", slug);
+     console.log(
+    "5. ETL URL:",
+    `ws://127.0.0.1:8000/api/v1/ws/progress/etl/${slug}`
+  );
+
+    setProgress(0);
+    setStatus("Starting data processing...");
+
+    etlWs = new WebSocket(
+      `ws://127.0.0.1:8000/api/v1/ws/progress/etl/${slug}`
     );
 
-    ws.onopen = () => console.log("WS open:", companyId);
-    ws.onclose = (e) => console.log("WS closed:", e.code, e.reason);
+    etlWs.onopen = () => {
+      console.log("ETL WS connected");
+    };
 
-    ws.onmessage = (event) => {
-      
+    etlWs.onmessage = async (event) => {
       if (!isActive) return;
+
       const msg = JSON.parse(event.data);
 
-      console.log("DETAILS MSG", msg)
+      console.log("ETL MSG:", msg);
 
-      setProgress(msg.progress);
-      setStatus(msg.status);
+      if (msg.progress !== undefined) {
+        setProgress(msg.progress);
+      }
 
-      // if (msg.progress === 100) {
-      //   setTimeout(async () => {
-      //     if (!isActive) return;
-      //     const fresh = await fetchExistingAnalysis();
-      //     if (fresh) setData(fresh);
-      //     setAnalysisDone(true);
-      //     setIsReanalyzing(false);
-      //   }, 800);
-      // }
-
-
-
+      if (msg.status) {
+        setStatus(msg.status);
+      }
 
       if (msg.progress === 100) {
-        // TEMP DEBUG: comparison data isn't ready yet at progress=100,
-        // it finishes ~3 min later in the background. Wait before fetching.
-        setStatus("Finalizing comparison data...");
-        setCompareCountdown(COMPARISON_WAIT_SECONDS);
+        console.log("ETL completed");
 
-        if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
-        countdownIntervalRef.current = setInterval(() => {
-          setCompareCountdown((prev) => {
-            if (prev === null || prev <= 1) {
-              clearInterval(countdownIntervalRef.current);
-              return 0;
-            }
-            return prev - 1;
-          });
-        }, 1000);
+        if (etlWs?.readyState === WebSocket.OPEN) {
+          etlWs.close();
+        }
 
-        setTimeout(async () => {
-          if (!isActive) return;
-          clearInterval(countdownIntervalRef.current);
-          setCompareCountdown(null);
-
-          const fresh = await fetchExistingAnalysis();
-          if (fresh) setData(fresh);
-          setAnalysisDone(true);
-          setIsReanalyzing(false);
-        }, COMPARISON_WAIT_SECONDS * 1000);
+        await finishAnalysis();
       }
 
       if (msg.progress === -1) {
-        setStatus("Something went wrong");
-        setError("Something went wrong");
+        setStatus(msg.status || "ETL processing failed");
+        setError(msg.status || "Something went wrong");
         setIsReanalyzing(false);
       }
     };
 
-    ws.onerror = (err) => console.error("WS error on details page", err);
+    etlWs.onerror = (err) => {
+      console.error("ETL WS error:", err);
+    };
 
-    // return () => {
-    //   isActive = false;
-    //   if (
-    //     ws.readyState === WebSocket.OPEN ||
-    //     ws.readyState === WebSocket.CONNECTING
-    //   ) {
-    //     ws.close();
-    //   }
-    // };
+    etlWs.onclose = (event) => {
+      console.log("ETL WS closed:", event.code, event.reason);
+    };
+  };
 
+  // -----------------------------------
+  // CRAWLER WEBSOCKET
+  // -----------------------------------
 
-    return () => {
-        isActive = false;
-        if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current); // TEMP DEBUG
-        if (
-          ws.readyState === WebSocket.OPEN ||
-          ws.readyState === WebSocket.CONNECTING
-        ) {
-          ws.close();
-        }
-      };
+  crawlerWs = new WebSocket(
+    `ws://127.0.0.1:8000/api/v1/ws/progress/${companyId}`
+  );
 
-      
-  }, [slug,wsReconnectKey]);
+  crawlerWs.onopen = () => {
+    console.log("Crawler WS connected:", companyId);
+  };
+
+  crawlerWs.onmessage = (event) => {
+    if (!isActive) return;
+
+    const msg = JSON.parse(event.data);
+
+    console.log("CRAWLER MSG:", msg);
+
+    if (msg.progress !== undefined) {
+      setProgress(msg.progress);
+    }
+
+    if (msg.status) {
+      setStatus(msg.status);
+    }
+
+    if (msg.progress === 100) {
+      console.log("Crawler completed → switching to ETL WS");
+      console.log("1. CRAWLER REACHED 100");
+      console.log("2. analysisDone =", analysisDone);
+
+      if (crawlerWs?.readyState === WebSocket.OPEN) {
+        crawlerWs.close();
+      }
+
+      console.log("3. ABOUT TO CONNECT ETL");
+
+      connectEtlWebSocket();
+    }
+
+    if (msg.progress === -1) {
+      setStatus(msg.status || "Crawler failed");
+      setError(msg.status || "Something went wrong");
+      setIsReanalyzing(false);
+    }
+  };
+
+  crawlerWs.onerror = (err) => {
+    console.error("Crawler WS error:", err);
+  };
+
+  crawlerWs.onclose = (event) => {
+    console.log("Crawler WS closed:", event.code, event.reason);
+  };
+
+  return () => {
+    isActive = false;
+
+    if (
+      crawlerWs &&
+      (crawlerWs.readyState === WebSocket.OPEN ||
+        crawlerWs.readyState === WebSocket.CONNECTING)
+    ) {
+      crawlerWs.close();
+    }
+
+    if (
+      etlWs &&
+      (etlWs.readyState === WebSocket.OPEN ||
+        etlWs.readyState === WebSocket.CONNECTING)
+    ) {
+      etlWs.close();
+    }
+  };
+}, [slug, wsReconnectKey, analysisDone]);
 
   const handleReanalyze = () => {
     setWsReconnectKey(prev => prev + 1);
@@ -312,21 +384,14 @@ const countdownIntervalRef = useRef(null);
 
 
           <p className="analysis-status-text">{status || "Starting..."}</p>
-{compareCountdown !== null && (
-  // TEMP DEBUG: remove this whole block once backend pushes a real "comparison ready" event
-  <p className="analysis-status-text">
-    Waiting for comparison data — {Math.floor(compareCountdown / 60)}:
-    {String(compareCountdown % 60).padStart(2, "0")} left
-  </p>
-)}
-{error && <p className="analysis-error">{error}</p>}
+      {error && <p className="analysis-error">{error}</p>}
 
 
 
-        </div>
-      </div>
-    );
-  }
+              </div>
+            </div>
+          );
+        }
 
   const { company, socials, contact, swot, metrics, summary, comparison } = data || {};
 
